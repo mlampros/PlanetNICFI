@@ -147,7 +147,7 @@ dtbl_keep_quads[, 'id_quad_page']
 
 Although we specified a maximum of 10 pages, as we see from the output, only 2 Quads are returned for our input bounding box. 
 
-In first place we can download and visualize the **thumbnail .png** images of these 2 files, which are small in size. For this purpose we'll utilize the [aria2c](https://aria2.github.io/) download utility. For installation instructions of **aria2c** (on all 3 Operating Systems) have a look at the **README.md** file of the **PlanetNICFI** R package. A nice feature of **aria2c** is that it allows paralleled download of files and it takes also various other parameters such as a **retry limit** or **maximum retries** (you can have a look at the [Documentation](https://aria2.github.io/manual/en/html/index.html) of *aria2c* for more information)
+In first place we can download and visualize the **thumbnail .png** images of these 2 files, which are small in size. For this purpose we'll utilize the [aria2c](https://aria2.github.io/) download utility. For installation instructions of **aria2c** (on all 3 Operating Systems) have a look at the [README.md](https://github.com/mlampros/PlanetNICFI#aria2c) file of the **PlanetNICFI** R package. A nice feature of **aria2c** is that it allows paralleled download of files and it takes also various other parameters such as a **retry limit** or **maximum retries** (you can have a look at the [Documentation](https://aria2.github.io/manual/en/html/index.html) of *aria2c* for more information)
 
 The **aria2c_download_paths** function of the R package allows the user to format the download web URL paths either of the **thumbnail png** or of the bigger **tif** files,
 
