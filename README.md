@@ -12,7 +12,7 @@
 
 <br>
 
-The **PlanetNICFI** R package includes functions to download and process the [NICFI](https://www.nicfi.no/) (**Norway's International Climate and Forest Initiative**) Planet Satellite Imagery utilizing the [Planet Mosaics API](https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics)
+The **PlanetNICFI** R package includes functions to download and process the [NICFI](https://www.nicfi.no/) (**Norway's International Climate and Forest Initiative**) Planet Satellite Imagery utilizing the [Planet Mosaics API](https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics). More details on the functionality of PlanetNICFI can be found in the [blog-post](http://mlampros.github.io/2021/06/12/Planet_NICFI_Satellite_Imagery/), Vignette and in the package Documentation ( *scroll down for information on how to use the* **docker image** )
 
 <br>
 
