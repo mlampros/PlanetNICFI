@@ -1,0 +1,9 @@
+
+#.....................................................................
+# Python is not required for the R package but if the OS does not have
+# already Python installed then this tutorial + the update of the
+# environment variables can set-up GDAL (what it remains is the
+# installation of PROJ)
+#.....................................................................
+
+https://github.com/PratyushTripathy/python_gdal_automated_windows
