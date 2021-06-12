@@ -34,6 +34,61 @@ compute_elapsed_time = function(time_start) {
 
 
 
+#' Extract the Projection from a (virtual) raster file
+#'
+#' @param path_to_raster a valid path to a raster file
+#' @param verbose a boolean. If TRUE then information will be printed out in the console
+#' @param suppress_warnings a boolean. If TRUE then potential warnings will be suppressed
+#' @return a character string with the projection information
+#'
+#' @importFrom gdalUtils gdalsrsinfo
+#' @importFrom raster raster crs
+#'
+#' @export
+#'
+#' @examples
+#'
+#' require(PlanetNICFI)
+#'
+#' pth_vrt = system.file('data_files/virt_rast.vrt', package = "PlanetNICFI")
+#'
+#' proj_info = proj_info_extract(path_to_raster = pth_vrt)
+#'
+
+proj_info_extract = function(path_to_raster,
+                             verbose = FALSE,
+                             suppress_warnings = TRUE) {
+
+  if (!file.exists(path_to_raster)) stop(glue::glue("The raster file '{path_to_raster}' does not exist!"), call. = F)
+
+  crs_value = gdalUtils::gdalsrsinfo(srs_def = path_to_raster, as.CRS = TRUE)
+  proj_dat = crs_value@projargs
+
+  if (is.na(proj_dat)) {
+    if (verbose) {
+      if (!suppress_warnings) {
+        message("The projection-info based on the 'gdalUtils::gdalsrsinfo()' function corresponds to NA! Switch to the 'raster::raster()' function!")
+      }
+    }
+    if (suppress_warnings) {
+      crs_value = suppress_warnings(raster::raster(x = path_to_raster))
+    }
+    else {
+      crs_value = raster::raster(x = path_to_raster)
+    }
+    crs_value = raster::crs(crs_value)
+    proj_dat = crs_value@projargs
+
+    if (is.na(proj_dat)) {
+      stop("The projection-info based on the 'raster::raster()' function returned an NA too! Highly probable 'proj4' is not available in your OS!", call. = F)
+    }
+  }
+
+  return(proj_dat)
+}
+
+
+
 #' Returns all 'monthly' or 'bi-annually' mosaic files of the NICFI data
 #'
 #' @param planet_api_key a character string specifying the Planet API key (see the references on how to acquire this key)
@@ -791,11 +846,7 @@ create_VRT_from_dir = function(dir_tifs,
 #' #....................................................
 #'
 #' wkt_sf = sf::st_as_sfc(WKT, crs = 4326)
-#' crs_value = gdalUtils::gdalsrsinfo(VRT_out, as.CRS = TRUE)
-#' proj_info = crs_value@projargs
-#' if (is.na(proj_info)) {
-#'   stop("The 'gdalUtils::gdalsrsinfo' returned an NA! 'proj4' is not available in your OS!")
-#' }
+#' proj_info = proj_info_extract(path_to_raster = VRT_out)
 #'
 #' wkt_transf = sf::st_transform(wkt_sf, crs = proj_info)
 #' bbx_transf = sf::st_bbox(wkt_transf)

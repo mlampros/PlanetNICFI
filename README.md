@@ -1,7 +1,7 @@
 
 [![tic](https://github.com/mlampros/PlanetNICFI/workflows/tic/badge.svg?branch=master)](https://github.com/mlampros/PlanetNICFI/actions)
 [![codecov.io](https://codecov.io/github/mlampros/PlanetNICFI/coverage.svg?branch=master)](https://codecov.io/github/mlampros/PlanetNICFI?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/PlanetNICFI)](http://cran.r-project.org/package=PlanetNICFI)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/PlanetNICFI)](https://CRAN.R-project.org/package=PlanetNICFI)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/PlanetNICFI?color=blue)](http://www.r-pkg.org/pkg/PlanetNICFI)
 <a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
 [![](https://img.shields.io/docker/automated/mlampros/planetnicfi.svg)](https://hub.docker.com/r/mlampros/planetnicfi)
