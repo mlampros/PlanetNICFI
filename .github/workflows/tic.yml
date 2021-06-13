@@ -22,7 +22,8 @@ jobs:
       matrix:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
-          - { os: windows-latest, r: "release" }
+          # I commented out 'windows' because it seems that it doesn't finish the gh-job (see also: https://github.com/r-spatial/sf/blob/master/.github/workflows/tic.yml)
+          # - { os: windows-latest, r: "release" }
           - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
           - { os: ubuntu-latest, r: "devel" }
           - { os: ubuntu-latest, r: "release" }
@@ -100,7 +101,7 @@ jobs:
 
       - name: "[Custom block] [Linux] Install spatial libraries"
         if: runner.os == 'Linux'
-        run: sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev
+        run: sudo apt-get install gdal-bin proj-bin libgdal-dev libproj-dev libgeos-dev libudunits2-dev
 
       - name: "[Custom block] [macOS] Install spatial libraries [ copied from https://github.com/r-spatial/sf/blob/master/.github/workflows/tic-db.yml#L99 ]"
         if: runner.os == 'macOS'
