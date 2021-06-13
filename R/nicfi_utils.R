@@ -71,7 +71,7 @@ proj_info_extract = function(path_to_raster,
       }
     }
     if (suppress_warnings) {
-      crs_value = suppress_warnings(raster::raster(x = path_to_raster))
+      crs_value = suppressWarnings(raster::raster(x = path_to_raster))
     }
     else {
       crs_value = raster::raster(x = path_to_raster)
