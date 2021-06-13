@@ -21,6 +21,8 @@ Extract the Projection from a (virtual) raster file
 }
 \examples{
 
+require(PlanetNICFI)
+
 pth_vrt = system.file('data_files/virt_rast.vrt', package = "PlanetNICFI")
 
 proj_info = proj_info_extract(path_to_raster = pth_vrt)
