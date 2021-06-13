@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -271,11 +271,7 @@
 <span class='co'>#....................................................</span>
 
 <span class='va'>wkt_sf</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_as_sfc.html'>st_as_sfc</a></span><span class='op'>(</span><span class='va'>WKT</span>, crs <span class='op'>=</span> <span class='fl'>4326</span><span class='op'>)</span>
-<span class='va'>crs_value</span> <span class='op'>=</span> <span class='fu'>gdalUtils</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/gdalUtils/man/gdalsrsinfo.html'>gdalsrsinfo</a></span><span class='op'>(</span><span class='va'>VRT_out</span>, as.CRS <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>proj_info</span> <span class='op'>=</span> <span class='va'>crs_value</span><span class='op'>@</span><span class='va'>projargs</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>proj_info</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"The 'gdalUtils::gdalsrsinfo' returned an NA! 'proj4' is not available in your OS!"</span><span class='op'>)</span>
-<span class='op'>}</span>
+<span class='va'>proj_info</span> <span class='op'>=</span> <span class='fu'><a href='proj_info_extract.html'>proj_info_extract</a></span><span class='op'>(</span>path_to_raster <span class='op'>=</span> <span class='va'>VRT_out</span><span class='op'>)</span>
 
 <span class='va'>wkt_transf</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span><span class='va'>wkt_sf</span>, crs <span class='op'>=</span> <span class='va'>proj_info</span><span class='op'>)</span>
 <span class='va'>bbx_transf</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_bbox.html'>st_bbox</a></span><span class='op'>(</span><span class='va'>wkt_transf</span><span class='op'>)</span>
