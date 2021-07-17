@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -89,6 +89,13 @@
 <p><br></p>
 <p>The <strong>PlanetNICFI</strong> R package includes functions to download and process the <a href="https://www.nicfi.no/">NICFI</a> (<strong>Norway’s International Climate and Forest Initiative</strong>) Planet Satellite Imagery utilizing the <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics">Planet Mosaics API</a>. More details on the functionality of PlanetNICFI can be found in the <a href="http://mlampros.github.io/2021/06/12/Planet_NICFI_Satellite_Imagery/">blog-post</a>, Vignette and in the package Documentation ( <em>scroll down for information on how to use the</em> <strong>docker image</strong> )</p>
 <p><br></p>
+<div id="parameters" class="section level4">
+<h4 class="hasAnchor">
+<a href="#parameters" class="anchor"></a><strong>Parameters</strong>:</h4>
+<p><br></p>
+<p>An <strong>important parameter</strong> to keep in mind is the <strong>page_size</strong> of the <strong>nicfi_quads_bbox()</strong> function. Depending on what the user defines as <strong>bbox_AOI</strong> or <strong>wkt_AOI</strong> the <strong>page_size</strong> parameter needs to be adjusted too. The bigger the Area of Interest is the bigger the <strong>page_size</strong> parameter must be. That means the <strong>nicfi_quads_bbox()</strong> function will return more Image products for a bigger area and the <strong>page_size</strong> parameter <strong>must</strong> be bigger than the <strong>default</strong> value of <strong>50</strong> so that all available Image products will be returned.</p>
+<p><br></p>
+</div>
 <div id="system-requirements" class="section level4">
 <h4 class="hasAnchor">
 <a href="#system-requirements" class="anchor"></a><strong>System Requirements</strong>:</h4>
