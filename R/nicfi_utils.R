@@ -138,6 +138,14 @@ proj_info_extract = function(path_to_raster,
 #'                              crs_bbox = 4326,
 #'                              URL = 'https://api.planet.com/basemaps/v1/mosaics',
 #'                              verbose = TRUE)
+#'
+#' #........................................
+#' # WKT of the area covered from NICFI data
+#' #........................................
+#'
+#' nicfi_aoi = sf::st_as_sfc(mosaic_files$dtbl_mosaic$mosaic_wkt[1], crs = 4326)
+#' cat(sf::st_as_text(nicfi_aoi))
+#'
 #' }
 
 
@@ -168,6 +176,7 @@ nicfi_mosaics = function(planet_api_key,
                         xmax = bbx[3],
                         ymax = bbx[4]),
                       crs = sf::st_crs(crs_bbox))
+
     plg = sf::st_as_sfc(plg, crs = crs_bbox)
     plg = sf::st_as_text(plg)
 
@@ -488,6 +497,8 @@ aria2c_download_paths = function(mosaic_output,
 #' https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-retry-wait
 #'
 #' https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-m
+#'
+#' https://aria2.github.io/manual/en/html/aria2c.html#exit-status
 #'
 #' @export
 #'

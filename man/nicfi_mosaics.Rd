@@ -55,6 +55,14 @@ mosaic_files = nicfi_mosaics(planet_api_key = api_key,
                              crs_bbox = 4326,
                              URL = 'https://api.planet.com/basemaps/v1/mosaics',
                              verbose = TRUE)
+
+#........................................
+# WKT of the area covered from NICFI data
+#........................................
+
+nicfi_aoi = sf::st_as_sfc(mosaic_files$dtbl_mosaic$mosaic_wkt[1], crs = 4326)
+cat(sf::st_as_text(nicfi_aoi))
+
 }
 }
 \references{

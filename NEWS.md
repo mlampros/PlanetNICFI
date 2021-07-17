@@ -1,4 +1,10 @@
 
+
+## PlanetNICFI 1.0.2
+
+* I updated the *README.md* file
+
+
 ## PlanetNICFI 1.0.1
 
 * I've included the *URL* in the *DESCRIPTION* file

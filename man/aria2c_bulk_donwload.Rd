@@ -111,4 +111,6 @@ https://aria2.github.io/manual/en/html/aria2c.html
 https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-retry-wait
 
 https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-m
+
+https://aria2.github.io/manual/en/html/aria2c.html#exit-status
 }
