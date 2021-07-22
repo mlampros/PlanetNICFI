@@ -1,5 +1,10 @@
 
 
+## PlanetNICFI 1.0.3
+
+* I've added an error case if the user does not have a valid registration for the NICFI Image data (see issue https://github.com/mlampros/PlanetNICFI/issues/1)
+
+
 ## PlanetNICFI 1.0.2
 
 * I updated the *README.md* file

@@ -111,6 +111,7 @@ proj_info_extract = function(path_to_raster,
 #' @importFrom httr GET authenticate content
 #' @importFrom sf st_bbox st_as_sfc st_as_text st_crs
 #' @importFrom data.table setDT rbindlist
+#' @importFrom glue glue
 #'
 #' @examples
 #'
@@ -163,6 +164,10 @@ nicfi_mosaics = function(planet_api_key,
 
   link = content_response$`_links`$`_self`
   mosaics = content_response$mosaics
+
+  valid_nicfi_image_types = unique(unlist(lapply(mosaics, function(x) unlist(x$item_types))))
+  user_has_img_types = paste(sapply(valid_nicfi_image_types, function(x) glue::glue("'{x}'")), collapse = ', ')
+  if (!all(c("REOrthoTile", "PSScene4Band") %in% valid_nicfi_image_types)) stop(glue::glue("Valid 'NICFI' Image types are 'REOrthoTile' and 'PSScene4Band', whereas you have {user_has_img_types}! Please follow the suggested registration in https://www.planet.com/nicfi/"), call. = F)
 
   mosaics = lapply(mosaics, function(x) {                                                 # extract the information of all mosaics (including the id's)
 
