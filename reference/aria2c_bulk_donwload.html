@@ -186,75 +186,75 @@
 <p>https://aria2.github.io/manual/en/html/aria2c.html#exit-status</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mlampros/PlanetNICFI'>PlanetNICFI</a></span><span class='op'>)</span>
-
-<span class='co'>#....................................</span>
-<span class='co'># first extract the available Mosaics</span>
-<span class='co'>#....................................</span>
-
-<span class='va'>api_key</span> <span class='op'>=</span> <span class='st'>'use_your_planet_nicfi_API_key'</span>
-
-<span class='va'>mosaic_files</span> <span class='op'>=</span> <span class='fu'><a href='nicfi_mosaics.html'>nicfi_mosaics</a></span><span class='op'>(</span>planet_api_key <span class='op'>=</span> <span class='va'>api_key</span>,
-                             type <span class='op'>=</span> <span class='st'>'monthly'</span>,
-                             crs_bbox <span class='op'>=</span> <span class='fl'>4326</span>,
-                             URL <span class='op'>=</span> <span class='st'>'https://api.planet.com/basemaps/v1/mosaics'</span>,
-                             verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='co'>#....................................</span>
-<span class='co'># keep the mosaic of 'September 2020'</span>
-<span class='co'>#....................................</span>
-
-<span class='va'>keep_idx</span> <span class='op'>=</span> <span class='fl'>1</span>
-<span class='va'>mosaic_ID</span> <span class='op'>=</span> <span class='va'>mosaic_files</span><span class='op'>$</span><span class='va'>dtbl_mosaic</span><span class='op'>$</span><span class='va'>id</span><span class='op'>[</span><span class='va'>keep_idx</span><span class='op'>]</span>
-
-
-<span class='co'>#................................................................</span>
-<span class='co'># then extract the available Quad files for the Mosaic for an AOI</span>
-<span class='co'>#................................................................</span>
-
-<span class='va'>wkt_file</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class='op'>=</span> <span class='st'>"PlanetNICFI"</span><span class='op'>)</span>
-<span class='va'>WKT</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>wkt_file</span>, warn <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='va'>quad_files</span> <span class='op'>=</span> <span class='fu'><a href='nicfi_quads_bbox.html'>nicfi_quads_bbox</a></span><span class='op'>(</span>planet_api_key <span class='op'>=</span> <span class='va'>api_key</span>,
-                              mosaic_id <span class='op'>=</span> <span class='va'>mosaic_ID</span>,
-                              bbox_AOI <span class='op'>=</span> <span class='cn'>NULL</span>,
-                              wkt_AOI <span class='op'>=</span> <span class='va'>WKT</span>,
-                              page_size <span class='op'>=</span> <span class='fl'>10</span>,
-                              crs_bbox <span class='op'>=</span> <span class='fl'>4326</span>,
-                              verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='co'>#..................................</span>
-<span class='co'># formated aria2c download weblinks</span>
-<span class='co'>#..................................</span>
-
-<span class='va'>web_links_aria2c</span> <span class='op'>=</span> <span class='fu'><a href='aria2c_download_paths.html'>aria2c_download_paths</a></span><span class='op'>(</span>mosaic_output <span class='op'>=</span> <span class='va'>mosaic_files</span>,
-                                         mosaic_id <span class='op'>=</span> <span class='va'>mosaic_ID</span>,
-                                         quads_output <span class='op'>=</span> <span class='va'>quad_files</span>,
-                                         img_type <span class='op'>=</span> <span class='st'>'tif'</span><span class='op'>)</span>
-
-<span class='co'>#.........................................................</span>
-<span class='co'># download the .tif files that intersect with the bbox AOI</span>
-<span class='co'>#.........................................................</span>
-
-<span class='va'>temp_dir_out</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='va'>all_threads</span> <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>set_threads</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>web_links_aria2c</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span>
-<span class='va'>num_threads</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>set_threads</span> <span class='op'>&lt;</span> <span class='va'>all_threads</span>, <span class='va'>set_threads</span>, <span class='va'>all_threads</span><span class='op'>)</span>
-<span class='va'>aria_args</span> <span class='op'>=</span> <span class='st'>'--allow-overwrite --file-allocation=none --retry-wait=5 --max-tries=0'</span>
-
-<span class='va'>res_downl</span> <span class='op'>=</span> <span class='fu'>aria2c_bulk_donwload</span><span class='op'>(</span>vector_or_file_path <span class='op'>=</span> <span class='va'>web_links_aria2c</span>,
-                                 default_directory <span class='op'>=</span> <span class='va'>temp_dir_out</span>,
-                                 user <span class='op'>=</span> <span class='cn'>NULL</span>,
-                                 password <span class='op'>=</span> <span class='cn'>NULL</span>,
-                                 threads <span class='op'>=</span> <span class='va'>num_threads</span>,
-                                 verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-                                 secondary_args_aria <span class='op'>=</span> <span class='va'>aria_args</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mlampros/PlanetNICFI'>PlanetNICFI</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#....................................</span></span>
+<span class='r-in'><span class='co'># first extract the available Mosaics</span></span>
+<span class='r-in'><span class='co'>#....................................</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>api_key</span> <span class='op'>=</span> <span class='st'>'use_your_planet_nicfi_API_key'</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>mosaic_files</span> <span class='op'>=</span> <span class='fu'><a href='nicfi_mosaics.html'>nicfi_mosaics</a></span><span class='op'>(</span>planet_api_key <span class='op'>=</span> <span class='va'>api_key</span>,</span>
+<span class='r-in'>                             type <span class='op'>=</span> <span class='st'>'monthly'</span>,</span>
+<span class='r-in'>                             crs_bbox <span class='op'>=</span> <span class='fl'>4326</span>,</span>
+<span class='r-in'>                             URL <span class='op'>=</span> <span class='st'>'https://api.planet.com/basemaps/v1/mosaics'</span>,</span>
+<span class='r-in'>                             verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#....................................</span></span>
+<span class='r-in'><span class='co'># keep the mosaic of 'September 2020'</span></span>
+<span class='r-in'><span class='co'>#....................................</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>keep_idx</span> <span class='op'>=</span> <span class='fl'>1</span></span>
+<span class='r-in'><span class='va'>mosaic_ID</span> <span class='op'>=</span> <span class='va'>mosaic_files</span><span class='op'>$</span><span class='va'>dtbl_mosaic</span><span class='op'>$</span><span class='va'>id</span><span class='op'>[</span><span class='va'>keep_idx</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#................................................................</span></span>
+<span class='r-in'><span class='co'># then extract the available Quad files for the Mosaic for an AOI</span></span>
+<span class='r-in'><span class='co'>#................................................................</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>wkt_file</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class='op'>=</span> <span class='st'>"PlanetNICFI"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>WKT</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>wkt_file</span>, warn <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>quad_files</span> <span class='op'>=</span> <span class='fu'><a href='nicfi_quads_bbox.html'>nicfi_quads_bbox</a></span><span class='op'>(</span>planet_api_key <span class='op'>=</span> <span class='va'>api_key</span>,</span>
+<span class='r-in'>                              mosaic_id <span class='op'>=</span> <span class='va'>mosaic_ID</span>,</span>
+<span class='r-in'>                              bbox_AOI <span class='op'>=</span> <span class='cn'>NULL</span>,</span>
+<span class='r-in'>                              wkt_AOI <span class='op'>=</span> <span class='va'>WKT</span>,</span>
+<span class='r-in'>                              page_size <span class='op'>=</span> <span class='fl'>10</span>,</span>
+<span class='r-in'>                              crs_bbox <span class='op'>=</span> <span class='fl'>4326</span>,</span>
+<span class='r-in'>                              verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#..................................</span></span>
+<span class='r-in'><span class='co'># formated aria2c download weblinks</span></span>
+<span class='r-in'><span class='co'>#..................................</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>web_links_aria2c</span> <span class='op'>=</span> <span class='fu'><a href='aria2c_download_paths.html'>aria2c_download_paths</a></span><span class='op'>(</span>mosaic_output <span class='op'>=</span> <span class='va'>mosaic_files</span>,</span>
+<span class='r-in'>                                         mosaic_id <span class='op'>=</span> <span class='va'>mosaic_ID</span>,</span>
+<span class='r-in'>                                         quads_output <span class='op'>=</span> <span class='va'>quad_files</span>,</span>
+<span class='r-in'>                                         img_type <span class='op'>=</span> <span class='st'>'tif'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#.........................................................</span></span>
+<span class='r-in'><span class='co'># download the .tif files that intersect with the bbox AOI</span></span>
+<span class='r-in'><span class='co'>#.........................................................</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>temp_dir_out</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>all_threads</span> <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>set_threads</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>web_links_aria2c</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span></span>
+<span class='r-in'><span class='va'>num_threads</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>set_threads</span> <span class='op'>&lt;</span> <span class='va'>all_threads</span>, <span class='va'>set_threads</span>, <span class='va'>all_threads</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>aria_args</span> <span class='op'>=</span> <span class='st'>'--allow-overwrite --file-allocation=none --retry-wait=5 --max-tries=0'</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>res_downl</span> <span class='op'>=</span> <span class='fu'>aria2c_bulk_donwload</span><span class='op'>(</span>vector_or_file_path <span class='op'>=</span> <span class='va'>web_links_aria2c</span>,</span>
+<span class='r-in'>                                 default_directory <span class='op'>=</span> <span class='va'>temp_dir_out</span>,</span>
+<span class='r-in'>                                 user <span class='op'>=</span> <span class='cn'>NULL</span>,</span>
+<span class='r-in'>                                 password <span class='op'>=</span> <span class='cn'>NULL</span>,</span>
+<span class='r-in'>                                 threads <span class='op'>=</span> <span class='va'>num_threads</span>,</span>
+<span class='r-in'>                                 verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>                                 secondary_args_aria <span class='op'>=</span> <span class='va'>aria_args</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
