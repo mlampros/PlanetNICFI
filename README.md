@@ -22,6 +22,9 @@ The **PlanetNICFI** R package includes functions to download and process the [NI
 
 An **important parameter** to keep in mind is the **page_size** of the [nicfi_quads_bbox()](https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html) function. Depending on what the user defines as **bbox_AOI** or **wkt_AOI** the **page_size** parameter needs to be adjusted too. The bigger the Area of Interest is the bigger the **page_size** parameter must be. That means the [nicfi_quads_bbox()](https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html) function will return more Image products for a bigger area and the **page_size** parameter **must** be bigger than the **default** value of **50** so that all available Image products will be returned.
 
+<br>
+
+Another **important information** to keep in mind is that the user currently **has to download** the NICFI .tif files in a **temporary directory** due to the **aria2c_download_paths()** function. By specifying a different **default_directory** parameter other than a temporary directory in the **aria2c_bulk_donwload()** function the .tif files won't be downloaded in the correct folder.
 
 <br>
 
