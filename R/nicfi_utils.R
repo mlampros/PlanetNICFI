@@ -633,6 +633,116 @@ aria2c_bulk_donwload = function(vector_or_file_path,
 
 
 
+#' Download the Planet NICFI images sequentially
+#'
+#' @param aria2c_file_paths a vector of character strings. See the output of the 'aria2c_download_paths()' function for the correct format.
+#' @param default_directory a character string specifying a valid path where the files will be saved
+#' @param download_method a character string specifying the download method. Can be for instance "wget", "curl" or any available method of the "download.file()" function
+#' @param verbosity an integer specifying the verbosity (between 0 and 2). If 0 then verbosity is disabled, if 1 then only essential verbosity is displayed and if 2 then all available information will be printed out in the console.
+#' @return it doesn't return an R object but it saves the files to a directory
+#'
+#' @importFrom utils flush.console download.file
+#'
+#' @details
+#'
+#' This function does not require the 'aria2c' tool (system requirement) to download the imagery. It uses the 'utils::download.file()' function internally
+#'
+#' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' require(PlanetNICFI)
+#'
+#' #....................................
+#' # first extract the available Mosaics
+#' #....................................
+#'
+#' api_key = 'use_your_planet_nicfi_API_key'
+#'
+#' mosaic_files = nicfi_mosaics(planet_api_key = api_key,
+#'                              type = 'monthly',
+#'                              crs_bbox = 4326,
+#'                              URL = 'https://api.planet.com/basemaps/v1/mosaics',
+#'                              verbose = TRUE)
+#'
+#' #....................................
+#' # keep the mosaic of 'September 2020'
+#' #....................................
+#'
+#' keep_idx = 1
+#' mosaic_ID = mosaic_files$dtbl_mosaic$id[keep_idx]
+#'
+#'
+#' #.....................................................
+#' # then extract the available Quad files for the Mosaic
+#' #.....................................................
+#'
+#' wkt_file = system.file('data_files/Sugar_Cane_Bolivia.wkt', package = "PlanetNICFI")
+#' WKT = readLines(wkt_file, warn = FALSE)
+#'
+#' quad_files = nicfi_quads_bbox(planet_api_key = api_key,
+#'                               mosaic_id = mosaic_ID,
+#'                               bbox_AOI = NULL,
+#'                               wkt_AOI = WKT,
+#'                               page_size = 10,
+#'                               crs_bbox = 4326,
+#'                               verbose = TRUE)
+#' #........................
+#' # download the .tif files
+#' #........................
+#'
+#' web_links_aria2c = aria2c_download_paths(mosaic_output = mosaic_files,
+#'                                          mosaic_id = mosaic_ID,
+#'                                          quads_output = quad_files,
+#'                                          img_type = 'tif')
+#'
+#' DIR_SAVE = tempdir(check = FALSE)
+#' print(DIR_SAVE)
+#'
+#' res_dat = sequential_download_paths(aria2c_file_paths = web_links_aria2c,
+#'                                     default_directory = DIR_SAVE,
+#'                                     download_method = 'wget',
+#'                                     verbosity = 1)
+#' }
+
+sequential_download_paths = function(aria2c_file_paths,
+                                     default_directory,
+                                     download_method = 'wget',
+                                     verbosity = 0) {
+
+  if (verbosity > 0) t_start = proc.time()
+  if (!verbosity %in% 0:2) stop("The 'verbosity' parameter must be one of 0, 1 or 2", call. = F)
+  SEQ = seq(from = 1, to = length(aria2c_file_paths), by = 2)
+  count_seq = 1
+  LEN = length(SEQ)
+
+  for (item in SEQ) {
+
+    if (verbosity > 0) {
+      message("File: ", count_seq, "/", LEN, " will be downloaded ...\r", appendLF = FALSE)
+      utils::flush.console()
+    }
+
+    URL_LINK = aria2c_file_paths[item]
+    DOWNLOAD_PATH = trimws(x = aria2c_file_paths[item+1], which = 'both')
+    DOWNLOAD_PATH = gsub('out=', '', DOWNLOAD_PATH)
+    DOWNLOAD_FULL_PATH = file.path(default_directory, DOWNLOAD_PATH)
+
+    utils::download.file(url = URL_LINK,
+                         destfile = DOWNLOAD_FULL_PATH,
+                         method = download_method,
+                         quiet = ifelse(verbosity == 2, FALSE, TRUE))
+
+    count_seq = count_seq + 1
+  }
+
+  if (verbosity > 0) compute_elapsed_time(t_start)
+}
+
+
+
 #' Create a Virtual Raster (VRT) file from the .tif files
 #'
 #' @param dir_tifs a valid path to a directory where the .tif files are saved

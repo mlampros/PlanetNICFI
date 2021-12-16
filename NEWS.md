@@ -3,6 +3,7 @@
 ## PlanetNICFI 1.0.4
 
 * I've updated the README.md file
+* I've included the *sequential_download_paths()* for a sequential download of the imagery that doesn't require the *aria2c* system requirement (it utilizes internally the *download.file()* function)
 
 
 ## PlanetNICFI 1.0.3
