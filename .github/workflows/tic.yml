@@ -112,15 +112,16 @@ jobs:
 
       - name: "[Stage] Install"
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
-        run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+        run: |
+          # I have to install first 'terra' and then 'raster' to resolve an issue that appears in Macintosh: https://github.com/rspatial/terra/issues/485
+          Rscript -e "install.packages('terra')"
+          Rscript -e "install.packages('raster')"
+          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      # macOS devel needs its own stage because we need to work with an option to suppress the usage of binaries
-      # I have to install first 'terra' and then 'raster' to resolve an issue that appears in Macintosh: https://github.com/rspatial/terra/issues/485
       - name: "[Stage] Prepare & Install (macOS-devel)"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
-          Rscript -e "install.packages('terra')"
-          Rscript -e "install.packages('raster')"
+          # macOS devel needs its own stage because we need to work with an option to suppress the usage of binaries
           echo -e 'options(Ncpus = 4, pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
