@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -64,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mlampros/PlanetNICFI/">
+  <a href="https://github.com/mlampros/PlanetNICFI/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,46 +79,48 @@
   <div class="contents col-md-9">
 
 
-<div id="planetnicfi" class="section level2">
-<h2 class="hasAnchor">
-<a href="#planetnicfi" class="anchor"></a>PlanetNICFI</h2>
+<div class="section level2">
+<h2 id="planetnicfi">PlanetNICFI<a class="anchor" aria-label="anchor" href="#planetnicfi"></a>
+</h2>
 <p><br></p>
-<p>The <strong>PlanetNICFI</strong> R package includes functions to download and process the <a href="https://www.nicfi.no/">NICFI</a> (<strong>Norway’s International Climate and Forest Initiative</strong>) Planet Satellite Imagery utilizing the <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics">Planet Mosaics API</a>. More details on the functionality of PlanetNICFI can be found in the <a href="http://mlampros.github.io/2021/06/12/Planet_NICFI_Satellite_Imagery/">blog-post</a>, Vignette and in the package Documentation ( <em>scroll down for information on how to use the</em> <strong>docker image</strong> )</p>
+<p>The <strong>PlanetNICFI</strong> R package includes functions to download and process the <a href="https://www.nicfi.no/" class="external-link">NICFI</a> (<strong>Norway’s International Climate and Forest Initiative</strong>) Planet Satellite Imagery utilizing the <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics" class="external-link">Planet Mosaics API</a>. More details on the functionality of PlanetNICFI can be found in the <a href="http://mlampros.github.io/2021/06/12/Planet_NICFI_Satellite_Imagery/" class="external-link">blog-post</a>, Vignette and in the package Documentation ( <em>scroll down for information on how to use the</em> <strong>docker image</strong> )</p>
 <p><br></p>
-<div id="parameters" class="section level4">
-<h4 class="hasAnchor">
-<a href="#parameters" class="anchor"></a><strong>Parameters</strong>:</h4>
+<div class="section level4">
+<h4 id="parameters">
+<strong>Parameters</strong>:<a class="anchor" aria-label="anchor" href="#parameters"></a>
+</h4>
 <p><br></p>
-<p>An <strong>important parameter</strong> to keep in mind is the <strong>page_size</strong> of the <a href="https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html">nicfi_quads_bbox()</a> function. Depending on what the user defines as <strong>bbox_AOI</strong> or <strong>wkt_AOI</strong> the <strong>page_size</strong> parameter needs to be adjusted too. The bigger the Area of Interest is the bigger the <strong>page_size</strong> parameter must be. That means the <a href="https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html">nicfi_quads_bbox()</a> function will return more Image products for a bigger area and the <strong>page_size</strong> parameter <strong>must</strong> be bigger than the <strong>default</strong> value of <strong>50</strong> so that all available Image products will be returned.</p>
+<p>An <strong>important parameter</strong> to keep in mind is the <strong>page_size</strong> of the <a href="https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html" class="external-link">nicfi_quads_bbox()</a> function. Depending on what the user defines as <strong>bbox_AOI</strong> or <strong>wkt_AOI</strong> the <strong>page_size</strong> parameter needs to be adjusted too. The bigger the Area of Interest is the bigger the <strong>page_size</strong> parameter must be. That means the <a href="https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html" class="external-link">nicfi_quads_bbox()</a> function will return more Image products for a bigger area and the <strong>page_size</strong> parameter <strong>must</strong> be bigger than the <strong>default</strong> value of <strong>50</strong> so that all available Image products will be returned.</p>
 <p><br></p>
 <p>Another <strong>important information</strong> to keep in mind is that the user currently <strong>has to download</strong> the NICFI .tif files in a <strong>temporary directory</strong> due to the <strong>aria2c_download_paths()</strong> function. By specifying a different <strong>default_directory</strong> parameter other than a temporary directory in the <strong>aria2c_bulk_donwload()</strong> function the .tif files won’t be downloaded in the correct folder.</p>
 <p><br></p>
 </div>
-<div id="system-requirements" class="section level4">
-<h4 class="hasAnchor">
-<a href="#system-requirements" class="anchor"></a><strong>System Requirements</strong>:</h4>
+<div class="section level4">
+<h4 id="system-requirements">
+<strong>System Requirements</strong>:<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
+</h4>
 <p><br></p>
-<div id="gdal" class="section level5">
-<h5 class="hasAnchor">
-<a href="#gdal" class="anchor"></a><strong>GDAL</strong>
+<div class="section level5">
+<h5 id="gdal">
+<strong>GDAL</strong><a class="anchor" aria-label="anchor" href="#gdal"></a>
 </h5>
-<p>Due to the fact that <em>PlanetNICFI</em> uses the <a href="https://github.com/r-spatial/sf">sf</a> and <a href="https://CRAN.R-project.org/package=gdalUtils">gdalUtils</a> R packages internally, <strong>it is required</strong> that the user has already <a href="https://gdal.org/">GDAL</a> installed and configured. The <a href="https://github.com/r-spatial/sf#installing">README.md file of the <strong>‘sf’</strong></a> package includes instructions on how to install and configure GDAL on all operating systems.</p>
+<p>Due to the fact that <em>PlanetNICFI</em> uses the <a href="https://github.com/r-spatial/sf" class="external-link">sf</a> and <a href="https://CRAN.R-project.org/package=gdalUtils" class="external-link">gdalUtils</a> R packages internally, <strong>it is required</strong> that the user has already <a href="https://gdal.org/" class="external-link">GDAL</a> installed and configured. The <a href="https://github.com/r-spatial/sf#installing" class="external-link">README.md file of the <strong>‘sf’</strong></a> package includes instructions on how to install and configure GDAL on all operating systems.</p>
 <p><br></p>
 </div>
-<div id="aria2c" class="section level5">
-<h5 class="hasAnchor">
-<a href="#aria2c" class="anchor"></a><strong>aria2c</strong>
+<div class="section level5">
+<h5 id="aria2c">
+<strong>aria2c</strong><a class="anchor" aria-label="anchor" href="#aria2c"></a>
 </h5>
-<p>The <a href="https://aria2.github.io/">aria2c</a> software is required for the paralleled download of the data, which has to be installed first in the Operating System:</p>
+<p>The <a href="https://aria2.github.io/" class="external-link">aria2c</a> software is required for the paralleled download of the data, which has to be installed first in the Operating System:</p>
 <p>On <strong>Ubuntu</strong> this can be done using:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>sudo apt<span class="op">-</span>get install aria2</span></code></pre></div>
 <p><br></p>
 <p>On <strong>Macintosh</strong> use,</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>brew install aria2</span></code></pre></div>
 <p><br></p>
-<p>and on <strong>Windows 10</strong> based on a <a href="https://www.tutorialexample.com/install-aria2-on-win10-to-download-files-a-beginner-guide/">web-tutorial</a>:</p>
+<p>and on <strong>Windows 10</strong> based on a <a href="https://www.tutorialexample.com/install-aria2-on-win10-to-download-files-a-beginner-guide/" class="external-link">web-tutorial</a>:</p>
 <ul>
-<li>first navigate to the <a href="https://github.com/aria2/aria2/releases/tag/release-1.35.0">Github repository of aria2c</a>
+<li>first navigate to the <a href="https://github.com/aria2/aria2/releases/tag/release-1.35.0" class="external-link">Github repository of aria2c</a>
 </li>
 <li>then download the <strong>aria2-1.35.0-win-64bit-build1.zip</strong> (where <strong>1.35.0</strong> corresponds to the current version as of <strong>June 2021</strong> - this might change in the future)</li>
 <li>unzip the downloaded file</li>
@@ -136,19 +134,20 @@
 <p><br></p>
 <p>To install the package from CRAN use,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"PlanetNICFI"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"PlanetNICFI"</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 <p>and to download the latest version of the package from Github,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'mlampros/PlanetNICFI'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'mlampros/PlanetNICFI'</span><span class="op">)</span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
-<div id="docker-image-if-you-want-to-avoid-the-installation-of-the-system-requirements" class="section level4">
-<h4 class="hasAnchor">
-<a href="#docker-image-if-you-want-to-avoid-the-installation-of-the-system-requirements" class="anchor"></a><strong>Docker Image</strong> (if you want to avoid the installation of the System Requirements)</h4>
+<div class="section level4">
+<h4 id="docker-image-if-you-want-to-avoid-the-installation-of-the-system-requirements">
+<strong>Docker Image</strong> (if you want to avoid the installation of the System Requirements)<a class="anchor" aria-label="anchor" href="#docker-image-if-you-want-to-avoid-the-installation-of-the-system-requirements"></a>
+</h4>
 <p><br></p>
-<p><strong>Docker images</strong> of the <em>PlanetNICFI</em> package are available to download from my <a href="https://hub.docker.com/r/mlampros/planetnicfi">dockerhub</a> account. The images come with <em>Rstudio</em> and the <em>R-development</em> version (latest) installed. The whole process was tested on Ubuntu 18.04. To <strong>pull</strong> &amp; <strong>run</strong> the image do the following,</p>
+<p><strong>Docker images</strong> of the <em>PlanetNICFI</em> package are available to download from my <a href="https://hub.docker.com/r/mlampros/planetnicfi" class="external-link">dockerhub</a> account. The images come with <em>Rstudio</em> and the <em>R-development</em> version (latest) installed. The whole process was tested on Ubuntu 18.04. To <strong>pull</strong> &amp; <strong>run</strong> the image do the following,</p>
 <p><br></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
 <span id="cb5-2"><a href="#cb5-2"></a>docker pull mlampros<span class="op">/</span>planetnicfi<span class="op">:</span>rstudiodev</span>
@@ -167,7 +166,7 @@
 <span id="cb7-2"><a href="#cb7-2"></a>chmod <span class="op">-</span>R <span class="dv">777</span> <span class="op">/</span>home<span class="op">/</span>YOUR_DIR</span>
 <span id="cb7-3"><a href="#cb7-3"></a></span></code></pre></div>
 <p><br></p>
-<p>The <strong>USER</strong> defaults to <em>rstudio</em> but you have to give your <strong>PASSWORD</strong> of preference (see <a href="https://www.rocker-project.org/">www.rocker-project.org</a> for more information).</p>
+<p>The <strong>USER</strong> defaults to <em>rstudio</em> but you have to give your <strong>PASSWORD</strong> of preference (see <a href="https://www.rocker-project.org/" class="external-link">www.rocker-project.org</a> for more information).</p>
 <p><br></p>
 <p>Open your web-browser and depending where the docker image was <em>build / run</em> give,</p>
 <p><br></p>
@@ -182,15 +181,15 @@
 <p>to access the Rstudio console in order to give your username and password.</p>
 <p><br></p>
 </div>
-<div id="attribution" class="section level3">
-<h3 class="hasAnchor">
-<a href="#attribution" class="anchor"></a>Attribution</h3>
+<div class="section level3">
+<h3 id="attribution">Attribution<a class="anchor" aria-label="anchor" href="#attribution"></a>
+</h3>
 <p>Please read the <strong>COPYRIGHTS</strong> file of the <strong>PlanetNICFI</strong> R package especially the section <strong>‘OBLIGATIONS AND RESTRICTIONS’</strong></p>
 <p><br></p>
 </div>
-<div id="citation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation:</h3>
+<div class="section level3">
+<h3 id="citation">Citation:<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h3>
 <p>If you use the <strong>PlanetNICFI</strong> R package in your paper or research please cite:</p>
 <p><br></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">@</span>Manual{,</span>
@@ -208,56 +207,61 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=PlanetNICFI">https://​cloud.r-project.org/​package=PlanetNICFI</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/mlampros/PlanetNICFI/">https://​github.com/​mlampros/​PlanetNICFI/​</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing PlanetNICFI</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Lampros Mouselimis <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/https://orcid.org/0000-0002-8024-1546" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=PlanetNICFI" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/mlampros/PlanetNICFI/" class="external-link">Browse source code</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mlampros/PlanetNICFI/actions"><img src="https://github.com/mlampros/PlanetNICFI/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
-<li><a href="https://codecov.io/github/mlampros/PlanetNICFI?branch=master"><img src="https://codecov.io/github/mlampros/PlanetNICFI/coverage.svg?branch=master" alt="codecov.io"></a></li>
-<li><a href="https://CRAN.R-project.org/package=PlanetNICFI"><img src="http://www.r-pkg.org/badges/version/PlanetNICFI" alt="CRAN_Status_Badge"></a></li>
-<li><a href="http://www.r-pkg.org/pkg/PlanetNICFI"><img src="http://cranlogs.r-pkg.org/badges/grand-total/PlanetNICFI?color=blue" alt="Downloads"></a></li>
-<li><a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px"></a></li>
-<li><a href="https://hub.docker.com/r/mlampros/planetnicfi"><img src="https://img.shields.io/docker/automated/mlampros/planetnicfi.svg"></a></li>
-<li><a href="https://cran.r-project.org/package=PlanetNICFI"><img src="https://tinyverse.netlify.com/badge/PlanetNICFI" alt="Dependencies"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing PlanetNICFI</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Lampros Mouselimis <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/https://orcid.org/0000-0002-8024-1546" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/mlampros/PlanetNICFI/actions" class="external-link"><img src="https://github.com/mlampros/PlanetNICFI/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
+<li><a href="https://codecov.io/github/mlampros/PlanetNICFI?branch=master" class="external-link"><img src="https://codecov.io/github/mlampros/PlanetNICFI/coverage.svg?branch=master" alt="codecov.io"></a></li>
+<li><a href="https://CRAN.R-project.org/package=PlanetNICFI" class="external-link"><img src="http://www.r-pkg.org/badges/version/PlanetNICFI" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://www.r-pkg.org/pkg/PlanetNICFI" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/PlanetNICFI?color=blue" alt="Downloads"></a></li>
+<li><a href="https://www.buymeacoffee.com/VY0x8snyh" target="_blank" class="external-link"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px"></a></li>
+<li><a href="https://hub.docker.com/r/mlampros/planetnicfi" class="external-link"><img src="https://img.shields.io/docker/automated/mlampros/planetnicfi.svg"></a></li>
+<li><a href="https://cran.r-project.org/package=PlanetNICFI" class="external-link"><img src="https://tinyverse.netlify.com/badge/PlanetNICFI" alt="Dependencies"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Lampros Mouselimis.</p>
+  <p></p>
+<p>Developed by Lampros Mouselimis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -265,6 +269,8 @@
 
   
 
+
+  
 
   </body>
 </html>
