@@ -183,7 +183,7 @@
 <code class="sourceCode R"><span class="va">temp_dir_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">temp_dir_out</span></code></pre></div>
 <p><br></p>
-<p>We set the number of threads to run in parallel equal to the number of the downloaded files and adjust the <em>aria2c</em> parameters too,</p>
+<p>We set the number of threads to run in parallel equal to the number of the downloaded files and adjust the <em>aria2c</em> parameters too (for a sequential download see the <em>‘sequential_download_paths()’</em> function that doesn’t make use of the <em>‘aria2c’</em> software),</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_threads</span> <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">set_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">url_paths_2016</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>

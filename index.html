@@ -92,7 +92,7 @@
 <p><br></p>
 <p>An <strong>important parameter</strong> to keep in mind is the <strong>page_size</strong> of the <a href="https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html" class="external-link">nicfi_quads_bbox()</a> function. Depending on what the user defines as <strong>bbox_AOI</strong> or <strong>wkt_AOI</strong> the <strong>page_size</strong> parameter needs to be adjusted too. The bigger the Area of Interest is the bigger the <strong>page_size</strong> parameter must be. That means the <a href="https://mlampros.github.io/PlanetNICFI/reference/nicfi_quads_bbox.html" class="external-link">nicfi_quads_bbox()</a> function will return more Image products for a bigger area and the <strong>page_size</strong> parameter <strong>must</strong> be bigger than the <strong>default</strong> value of <strong>50</strong> so that all available Image products will be returned.</p>
 <p><br></p>
-<p>Another <strong>important information</strong> to keep in mind is that the user currently <strong>has to download</strong> the NICFI .tif files in a <strong>temporary directory</strong> due to the <strong>aria2c_download_paths()</strong> function. By specifying a different <strong>default_directory</strong> parameter other than a temporary directory in the <strong>aria2c_bulk_donwload()</strong> function the .tif files won’t be downloaded in the correct folder.</p>
+<p>Another <strong>important information</strong> to keep in mind (if using the <em>‘aria2c’</em> software to download the data - see the <em>‘sequential_download_paths()’</em> function for an alternative) is that the user currently <strong>has to download</strong> the NICFI .tif files in a <strong>temporary directory</strong> due to the <strong>aria2c_download_paths()</strong> function. By specifying a different <strong>default_directory</strong> parameter other than a temporary directory in the <strong>aria2c_bulk_donwload()</strong> function the .tif files won’t be downloaded in the correct folder.</p>
 <p><br></p>
 </div>
 <div class="section level4">
@@ -104,14 +104,14 @@
 <h5 id="gdal">
 <strong>GDAL</strong><a class="anchor" aria-label="anchor" href="#gdal"></a>
 </h5>
-<p>Due to the fact that <em>PlanetNICFI</em> uses the <a href="https://github.com/r-spatial/sf" class="external-link">sf</a> and <a href="https://CRAN.R-project.org/package=gdalUtils" class="external-link">gdalUtils</a> R packages internally, <strong>it is required</strong> that the user has already <a href="https://gdal.org/" class="external-link">GDAL</a> installed and configured. The <a href="https://github.com/r-spatial/sf#installing" class="external-link">README.md file of the <strong>‘sf’</strong></a> package includes instructions on how to install and configure GDAL on all operating systems.</p>
+<p>The usage of the <em>PlanetNICFI</em> package requires a geospatial setup as specified in the <a href="https://github.com/r-spatial/sf#installing" class="external-link">sf</a> or <a href="https://github.com/rspatial/terra#from-source-code" class="external-link">terra</a> README.md files.</p>
 <p><br></p>
 </div>
 <div class="section level5">
 <h5 id="aria2c">
 <strong>aria2c</strong><a class="anchor" aria-label="anchor" href="#aria2c"></a>
 </h5>
-<p>The <a href="https://aria2.github.io/" class="external-link">aria2c</a> software is required for the paralleled download of the data, which has to be installed first in the Operating System:</p>
+<p>Besides the <em>‘sequential_download_paths()’</em> function the <a href="https://aria2.github.io/" class="external-link">aria2c</a> software is another option to download the data in parallel. It has to be installed first in the Operating System:</p>
 <p>On <strong>Ubuntu</strong> this can be done using:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>sudo apt<span class="op">-</span>get install aria2</span></code></pre></div>
 <p><br></p>
@@ -195,8 +195,8 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="op">@</span>Manual{,</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  title =<span class="st"> </span>{{PlanetNICFI}<span class="op">:</span><span class="st"> </span>Processing of the <span class="st">'Planet NICFI'</span> Satellite Imagery using R},</span>
 <span id="cb10-3"><a href="#cb10-3"></a>  author =<span class="st"> </span>{Lampros Mouselimis},</span>
-<span id="cb10-4"><a href="#cb10-4"></a>  year =<span class="st"> </span>{<span class="dv">2021</span>},</span>
-<span id="cb10-5"><a href="#cb10-5"></a>  note =<span class="st"> </span>{R package version <span class="dv">1</span>.<span class="fl">0.0</span> using Imagery <span class="dv">2021</span> Planet Labs Inc. All use subject to the Participant License Agreement},</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  year =<span class="st"> </span>{<span class="dv">2022</span>},</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  note =<span class="st"> </span>{R package version <span class="dv">1</span>.<span class="fl">0.4</span> using Imagery <span class="dv">2021</span> Planet Labs Inc. All use subject to the Participant License Agreement},</span>
 <span id="cb10-6"><a href="#cb10-6"></a>  url =<span class="st"> </span>{https<span class="op">:</span><span class="er">//</span>CRAN.R<span class="op">-</span>project.org<span class="op">/</span>package=PlanetNICFI},</span>
 <span id="cb10-7"><a href="#cb10-7"></a>}</span></code></pre></div>
 <p><br></p>

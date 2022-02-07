@@ -59,8 +59,12 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4" id="planetnicfi-104">PlanetNICFI 1.0.4<small>2022-02-06</small><a class="anchor" aria-label="anchor" href="#planetnicfi-104"></a></h2>
-<ul><li>I’ve updated the README.md file</li>
-<li>I’ve included the <em>sequential_download_paths()</em> for a sequential download of the imagery that doesn’t require the <em>aria2c</em> system requirement (it utilizes internally the <em>download.file()</em> function)</li>
+<ul><li>I’ve included the <em>sequential_download_paths()</em> for a sequential download of the imagery that doesn’t require the <em>aria2c</em> system requirement (it utilizes internally the base <em>download.file()</em> function)</li>
+<li>I removed the <em>‘suppress_warnings’</em> parameter from the <em>‘proj_info_extract()’</em> function</li>
+<li>The package <em>‘raster’</em> was moved to suggests. I can not replace it with the <em>‘terra’</em> package because the latter is not yet supported from the <em>‘RStoolbox’</em> package (see vignette)</li>
+<li>I removed the <em>‘gdalUtils’</em> package due to the fact that it currently gives an error in the <em>‘r-devel-windows-x86_64-new-UL’</em> test Flavor on CRAN</li>
+<li>I removed the <em>‘return_raster’</em> parameter from the <em>‘nicfi_crop_images()’</em> function because I replaced the <em>‘gdalUtils::gdalwarp()’</em> function with the <em>‘sf::gdal_utils()’</em> function</li>
+<li>I’ve updated the README.md file</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.3" id="planetnicfi-103">PlanetNICFI 1.0.3<small>2021-07-22</small><a class="anchor" aria-label="anchor" href="#planetnicfi-103"></a></h2>

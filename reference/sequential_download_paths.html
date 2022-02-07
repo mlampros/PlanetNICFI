@@ -142,6 +142,7 @@
 <span class="r-in">                                         img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">res_dat</span> <span class="op">=</span> <span class="fu">sequential_download_paths</span><span class="op">(</span>aria2c_file_paths <span class="op">=</span> <span class="va">web_links_aria2c</span>,</span>
 <span class="r-in">                                    default_directory <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span>

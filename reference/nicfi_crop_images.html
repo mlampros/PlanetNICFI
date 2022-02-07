@@ -70,7 +70,6 @@
   threads <span class="op">=</span> <span class="fl">1</span>,
   of <span class="op">=</span> <span class="st">"GTiff"</span>,
   resize_method <span class="op">=</span> <span class="st">"lanczos"</span>,
-  return_raster <span class="op">=</span> <span class="cn">FALSE</span>,
   verbose <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -86,17 +85,15 @@
 <dt>threads</dt>
 <dd><p>an integer. In case that this parameter is greater than 1 then multiple threads will be utilized in the 'gdalwarp' function</p></dd>
 <dt>of</dt>
-<dd><p>a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdalwarp' function of the 'gdalUtils' package</p></dd>
+<dd><p>a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdal_utils' function of the 'sf' package</p></dd>
 <dt>resize_method</dt>
-<dd><p>a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdalwarp' function of the 'gdalUtils' package</p></dd>
-<dt>return_raster</dt>
-<dd><p>a boolean. If TRUE then the function will return the cropped image as a RasterBrick too</p></dd>
+<dd><p>a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdal_utils' function of the 'sf' package</p></dd>
 <dt>verbose</dt>
 <dd><p>a boolean. If TRUE then information will be printed out in the console</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>either NULL or a RasterBrick (if the parameter 'return_raster' is set to TRUE)</p>
+    <p>a logical indicating success (i.e., TRUE); in case of failure, an error is raised</p>
     </div>
 
     <div id="ref-examples">
