@@ -4,14 +4,12 @@
 \alias{proj_info_extract}
 \title{Extract the Projection from a (virtual) raster file}
 \usage{
-proj_info_extract(path_to_raster, verbose = FALSE, suppress_warnings = TRUE)
+proj_info_extract(path_to_raster, verbose = FALSE)
 }
 \arguments{
 \item{path_to_raster}{a valid path to a raster file}
 
 \item{verbose}{a boolean. If TRUE then information will be printed out in the console}
-
-\item{suppress_warnings}{a boolean. If TRUE then potential warnings will be suppressed}
 }
 \value{
 a character string with the projection information

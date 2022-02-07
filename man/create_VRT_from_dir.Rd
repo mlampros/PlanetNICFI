@@ -112,7 +112,7 @@ res_vrt = create_VRT_from_dir(dir_tifs = temp_dir_out,
 # consist of multiple files, i.e. a mosaic) and plot it
 #......................................................
 
-rst = raster::raster(VRT_out)
+rst = terra::rast(VRT_out)
 sp::plot(rst, axes = F, legend = F)
 
 }

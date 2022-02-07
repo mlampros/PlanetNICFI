@@ -38,11 +38,9 @@ compute_elapsed_time = function(time_start) {
 #'
 #' @param path_to_raster a valid path to a raster file
 #' @param verbose a boolean. If TRUE then information will be printed out in the console
-#' @param suppress_warnings a boolean. If TRUE then potential warnings will be suppressed
 #' @return a character string with the projection information
 #'
-#' @importFrom gdalUtils gdalsrsinfo
-#' @importFrom raster raster crs
+#' @importFrom terra rast crs
 #'
 #' @export
 #'
@@ -55,35 +53,15 @@ compute_elapsed_time = function(time_start) {
 #' proj_info = proj_info_extract(path_to_raster = pth_vrt)
 #'
 
-proj_info_extract = function(path_to_raster,
-                             verbose = FALSE,
-                             suppress_warnings = TRUE) {
+proj_info_extract = function(path_to_raster, verbose = FALSE) {
 
   if (!file.exists(path_to_raster)) stop(glue::glue("The raster file '{path_to_raster}' does not exist!"), call. = F)
 
-  crs_value = gdalUtils::gdalsrsinfo(srs_def = path_to_raster, as.CRS = TRUE)
-  proj_dat = crs_value@projargs
+  rst = terra::rast(x = path_to_raster)
+  crs_value = terra::crs(x = rst, proj = TRUE)
+  proj_dat = trimws(x = crs_value, which = 'both')
 
-  if (is.na(proj_dat)) {
-    if (verbose) {
-      if (!suppress_warnings) {
-        message("The projection-info based on the 'gdalUtils::gdalsrsinfo()' function corresponds to NA! Switch to the 'raster::raster()' function!")
-      }
-    }
-    if (suppress_warnings) {
-      crs_value = suppressWarnings(raster::raster(x = path_to_raster))
-    }
-    else {
-      crs_value = raster::raster(x = path_to_raster)
-    }
-    crs_value = raster::crs(crs_value)
-    proj_dat = crs_value@projargs
-
-    if (is.na(proj_dat)) {
-      stop("The projection-info based on the 'raster::raster()' function returned an NA too! Highly probable 'proj4' is not available in your OS!", call. = F)
-    }
-  }
-
+  if (is.na(proj_dat)) stop("The projection-info based on the 'terra::crs()' function corresponds to NA! Highly probable 'proj4' is not available in your Operating System!", call. = F)
   return(proj_dat)
 }
 
@@ -752,7 +730,7 @@ sequential_download_paths = function(aria2c_file_paths,
 #' @return it doesn't return an object but it saves the output to a file
 #'
 #' @importFrom glue glue
-#' @importFrom gdalUtils gdalbuildvrt
+#' @importFrom sf gdal_utils
 #'
 #' @export
 #'
@@ -842,7 +820,7 @@ sequential_download_paths = function(aria2c_file_paths,
 #' # consist of multiple files, i.e. a mosaic) and plot it
 #' #......................................................
 #'
-#' rst = raster::raster(VRT_out)
+#' rst = terra::rast(VRT_out)
 #' sp::plot(rst, axes = F, legend = F)
 #'
 #' }
@@ -858,10 +836,10 @@ create_VRT_from_dir = function(dir_tifs,
   if (length(lst_vrt) == 0) stop(glue::glue("The directory '{dir_tifs}' does not include any files of extension '{file_extension}'!"), call. = F)
 
   if (verbose) cat(glue::glue("The VRT Mosaic will be built from  {length(lst_vrt)}  '{file_extension}' files and will be saved in  '{output_path_VRT}' ..."), '\n')
-  vrt_mosaic = gdalUtils::gdalbuildvrt(gdalfile = lst_vrt,
-                                       output.vrt = output_path_VRT,
-                                       separate = FALSE,
-                                       verbose = verbose)
+  vrt_mosaic = sf::gdal_utils(util = 'buildvrt',
+                              source = lst_vrt,
+                              destination = output_path_VRT,
+                              quiet = !verbose)
 
   if (verbose) compute_elapsed_time(t_start)
 }
@@ -874,15 +852,14 @@ create_VRT_from_dir = function(dir_tifs,
 #' @param output_pth a valid path to the output .tif file. This file path can also point to a .vrt file by setting the 'of' parameter to 'VRT'
 #' @param bbox_AOI a list of the format "list(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax)" that includes the bounding box 'xmin', 'xmax', 'ymin', 'ymax' coordinate values of the Area of Interest (AOI)
 #' @param threads an integer. In case that this parameter is greater than 1 then multiple threads will be utilized in the 'gdalwarp' function
-#' @param of a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdalwarp' function of the 'gdalUtils' package
-#' @param resize_method a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdalwarp' function of the 'gdalUtils' package
-#' @param return_raster a boolean. If TRUE then the function will return the cropped image as a RasterBrick too
+#' @param of a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdal_utils' function of the 'sf' package
+#' @param resize_method a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdal_utils' function of the 'sf' package
 #' @param verbose a boolean. If TRUE then information will be printed out in the console
-#' @return either NULL or a RasterBrick (if the parameter 'return_raster' is set to TRUE)
+#' @return a logical indicating success (i.e., TRUE); in case of failure, an error is raised
 #'
 #' @export
 #'
-#' @importFrom gdalUtils gdalwarp
+#' @importFrom sf gdal_utils
 #' @importFrom glue glue
 #'
 #' @examples
@@ -1005,23 +982,23 @@ nicfi_crop_images = function(input_pth,
                              threads = 1,
                              of = 'GTiff',
                              resize_method = 'lanczos',
-                             return_raster = FALSE,
                              verbose = FALSE) {
 
   if (verbose) t_start = proc.time()
-  threads_multi = ifelse(threads > 1, TRUE, FALSE)
-  res_warp = gdalUtils::gdalwarp(srcfile = input_pth,
-                                 dstfile = output_pth,
-                                 r = resize_method,
-                                 te = c(bbox_AOI$xmin,
-                                        bbox_AOI$ymin,
-                                        bbox_AOI$xmax,
-                                        bbox_AOI$ymax),
-                                 of = of,
-                                 multi = threads_multi,
-                                 wo = as.character(glue::glue("NUM_THREADS={threads}")),
-                                 output_Raster = return_raster,
-                                 verbose = verbose)
+
+  vec_options = c("-te", bbox_AOI$xmin, bbox_AOI$ymin, bbox_AOI$xmax, bbox_AOI$ymax,
+                  "-r", resize_method,
+                  "-of", of)
+
+  if (threads > 1) {
+    vec_options = c(vec_options, "-multi", "-wo", as.character(glue::glue("NUM_THREADS={threads}")))
+  }
+
+  res_warp = sf::gdal_utils(util = 'warp',
+                            source = input_pth,
+                            destination = output_pth,
+                            options = vec_options,
+                            quiet = !verbose)
 
   if (verbose) compute_elapsed_time(t_start)
   return(res_warp)

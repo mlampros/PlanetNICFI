@@ -2,8 +2,12 @@
 
 ## PlanetNICFI 1.0.4
 
+* I've included the *sequential_download_paths()* for a sequential download of the imagery that doesn't require the *aria2c* system requirement (it utilizes internally the base *download.file()* function)
+* I removed the *'suppress_warnings'* parameter from the *'proj_info_extract()'* function
+* The package *'raster'* was moved to suggests. I can not replace it with the *'terra'* package because the latter is not yet supported from the *'RStoolbox'* package (see vignette)
+* I removed the *'gdalUtils'* package due to the fact that it currently gives an error in the *'r-devel-windows-x86_64-new-UL'* test Flavor on CRAN
+* I removed the *'return_raster'* parameter from the *'nicfi_crop_images()'* function because I replaced the *'gdalUtils::gdalwarp()'* function with the *'sf::gdal_utils()'* function
 * I've updated the README.md file
-* I've included the *sequential_download_paths()* for a sequential download of the imagery that doesn't require the *aria2c* system requirement (it utilizes internally the *download.file()* function)
 
 
 ## PlanetNICFI 1.0.3

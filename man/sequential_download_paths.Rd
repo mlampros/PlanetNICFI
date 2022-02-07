@@ -79,6 +79,7 @@ web_links_aria2c = aria2c_download_paths(mosaic_output = mosaic_files,
                                          img_type = 'tif')
 
 DIR_SAVE = tempdir(check = FALSE)
+print(DIR_SAVE)
 
 res_dat = sequential_download_paths(aria2c_file_paths = web_links_aria2c,
                                     default_directory = DIR_SAVE,

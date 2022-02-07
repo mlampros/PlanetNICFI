@@ -11,7 +11,6 @@ nicfi_crop_images(
   threads = 1,
   of = "GTiff",
   resize_method = "lanczos",
-  return_raster = FALSE,
   verbose = FALSE
 )
 }
@@ -24,16 +23,14 @@ nicfi_crop_images(
 
 \item{threads}{an integer. In case that this parameter is greater than 1 then multiple threads will be utilized in the 'gdalwarp' function}
 
-\item{of}{a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdalwarp' function of the 'gdalUtils' package}
+\item{of}{a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdal_utils' function of the 'sf' package}
 
-\item{resize_method}{a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdalwarp' function of the 'gdalUtils' package}
-
-\item{return_raster}{a boolean. If TRUE then the function will return the cropped image as a RasterBrick too}
+\item{resize_method}{a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdal_utils' function of the 'sf' package}
 
 \item{verbose}{a boolean. If TRUE then information will be printed out in the console}
 }
 \value{
-either NULL or a RasterBrick (if the parameter 'return_raster' is set to TRUE)
+a logical indicating success (i.e., TRUE); in case of failure, an error is raised
 }
 \description{
 Crop the downloaded NICFI .tif or .vrt file using 'gdalwarp'
