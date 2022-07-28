@@ -1,4 +1,9 @@
 
+## PlanetNICFI 1.0.4
+
+* I've added the "figures" folder in the "man" directory
+* I updated the *README.md* file
+
 
 ## PlanetNICFI 1.0.4
 

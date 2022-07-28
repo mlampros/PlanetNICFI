@@ -89,6 +89,13 @@ remotes::install_github('mlampros/PlanetNICFI')
 
 <br><br>
 
+#### **Tropical Forests Satellite Data Coverage**
+
+<br>
+
+<img src="man/figures/nicfi_tropical_forests.png" ></img>
+
+<br>
 
 #### **Docker Image** (if you want to avoid the installation of the System Requirements)
 
