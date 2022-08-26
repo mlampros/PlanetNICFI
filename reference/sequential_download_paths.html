@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -63,28 +63,37 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sequential_download_paths</span><span class="op">(</span>
-  <span class="va">aria2c_file_paths</span>,
-  <span class="va">default_directory</span>,
-  download_method <span class="op">=</span> <span class="st">"wget"</span>,
-  verbosity <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sequential_download_paths</span><span class="op">(</span></span>
+<span>  <span class="va">aria2c_file_paths</span>,</span>
+<span>  <span class="va">default_directory</span>,</span>
+<span>  download_method <span class="op">=</span> <span class="st">"wget"</span>,</span>
+<span>  verbosity <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>aria2c_file_paths</dt>
 <dd><p>a vector of character strings. See the output of the 'aria2c_download_paths()' function for the correct format.</p></dd>
+
+
 <dt>default_directory</dt>
 <dd><p>a character string specifying a valid path where the files will be saved</p></dd>
+
+
 <dt>download_method</dt>
 <dd><p>a character string specifying the download method. Can be for instance "wget", "curl" or any available method of the "download.file()" function</p></dd>
+
+
 <dt>verbosity</dt>
 <dd><p>an integer specifying the verbosity (between 0 and 2). If 0 then verbosity is disabled, if 1 then only essential verbosity is displayed and if 2 then all available information will be printed out in the console.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>it doesn't return an R object but it saves the files to a directory</p>
+    
+
+<p>it doesn't return an R object but it saves the files to a directory</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -93,62 +102,62 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"><span class="co"># first extract the available Mosaics</span></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key'</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
-<span class="r-in">                             type <span class="op">=</span> <span class="st">'monthly'</span>,</span>
-<span class="r-in">                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span>
-<span class="r-in">                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"><span class="co"># keep the mosaic of 'September 2020'</span></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">keep_idx</span> <span class="op">=</span> <span class="fl">1</span></span>
-<span class="r-in"><span class="va">mosaic_ID</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">keep_idx</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.....................................................</span></span>
-<span class="r-in"><span class="co"># then extract the available Quad files for the Mosaic</span></span>
-<span class="r-in"><span class="co">#.....................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">quad_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
-<span class="r-in">                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span>
-<span class="r-in">                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span>
-<span class="r-in">                              page_size <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">#........................</span></span>
-<span class="r-in"><span class="co"># download the .tif files</span></span>
-<span class="r-in"><span class="co">#........................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">web_links_aria2c</span> <span class="op">=</span> <span class="fu"><a href="aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
-<span class="r-in">                                         mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span>
-<span class="r-in">                                         quads_output <span class="op">=</span> <span class="va">quad_files</span>,</span>
-<span class="r-in">                                         img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res_dat</span> <span class="op">=</span> <span class="fu">sequential_download_paths</span><span class="op">(</span>aria2c_file_paths <span class="op">=</span> <span class="va">web_links_aria2c</span>,</span>
-<span class="r-in">                                    default_directory <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span>
-<span class="r-in">                                    download_method <span class="op">=</span> <span class="st">'wget'</span>,</span>
-<span class="r-in">                                    verbosity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span><span class="co"># first extract the available Mosaics</span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key'</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span></span>
+<span class="r-in"><span>                             type <span class="op">=</span> <span class="st">'monthly'</span>,</span></span>
+<span class="r-in"><span>                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span></span>
+<span class="r-in"><span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span><span class="co"># keep the mosaic of 'September 2020'</span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">keep_idx</span> <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">mosaic_ID</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">keep_idx</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.....................................................</span></span></span>
+<span class="r-in"><span><span class="co"># then extract the available Quad files for the Mosaic</span></span></span>
+<span class="r-in"><span><span class="co">#.....................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">quad_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span></span>
+<span class="r-in"><span>                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span></span>
+<span class="r-in"><span>                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span></span>
+<span class="r-in"><span>                              page_size <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#........................</span></span></span>
+<span class="r-in"><span><span class="co"># download the .tif files</span></span></span>
+<span class="r-in"><span><span class="co">#........................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">web_links_aria2c</span> <span class="op">=</span> <span class="fu"><a href="aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span></span>
+<span class="r-in"><span>                                         mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span></span>
+<span class="r-in"><span>                                         quads_output <span class="op">=</span> <span class="va">quad_files</span>,</span></span>
+<span class="r-in"><span>                                         img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">DIR_SAVE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">DIR_SAVE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res_dat</span> <span class="op">=</span> <span class="fu">sequential_download_paths</span><span class="op">(</span>aria2c_file_paths <span class="op">=</span> <span class="va">web_links_aria2c</span>,</span></span>
+<span class="r-in"><span>                                    default_directory <span class="op">=</span> <span class="va">DIR_SAVE</span>,</span></span>
+<span class="r-in"><span>                                    download_method <span class="op">=</span> <span class="st">'wget'</span>,</span></span>
+<span class="r-in"><span>                                    verbosity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -163,7 +172,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

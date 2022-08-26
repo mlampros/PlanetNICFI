@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -105,34 +105,34 @@
 </ul>
 <p>and the following Well Known Text (WKT) as a cropped area utilizing <a href="http://geojson.io" class="external-link">geojson.io</a>,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span>
-<span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">WKT</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span>
+<span><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">WKT</span></span></code></pre></div>
 <p><img src="screenshots/wkt.png"></p>
 <p><br></p>
 <p>First, we have to create a variable and store the <strong>API key</strong> (which a user receives as explained previously),</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key_here'</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key_here'</span></span></code></pre></div>
 <p><br></p>
 <p>Then we have to extract the <strong>bi-annual mosaics</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span>
-
-<span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,
-                             type <span class="op">=</span> <span class="st">'bi_annually'</span>,
-                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,
-                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,
-                             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="va">dtbl</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
+<span>                             type <span class="op">=</span> <span class="st">'bi_annually'</span>,</span>
+<span>                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
+<span>                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span>
+<span>                             verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dtbl</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl</span><span class="op">)</span></span></code></pre></div>
 <p><img src="screenshots/colnames_mosaics.png"></p>
 <p><br></p>
 <p>The output of the <strong>nicfi_mosaics</strong> function is a named list of length 2 and we will keep the data.table (<strong>dtbl_mosaic</strong>) which includes the <strong>mosaic id’s</strong> and the <strong>bi-annual Dates</strong> (among other columns) as the previous and the next output shows,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cols_keep</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'id'</span>, <span class="st">'first_acquired'</span>, <span class="st">'last_acquired'</span><span class="op">)</span>
-<span class="va">dtbl_keep</span> <span class="op">=</span> <span class="va">dtbl</span><span class="op">[</span>, <span class="va">..cols_keep</span><span class="op">]</span>
-<span class="va">dtbl_keep</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cols_keep</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'id'</span>, <span class="st">'first_acquired'</span>, <span class="st">'last_acquired'</span><span class="op">)</span></span>
+<span><span class="va">dtbl_keep</span> <span class="op">=</span> <span class="va">dtbl</span><span class="op">[</span>, <span class="va">..cols_keep</span><span class="op">]</span></span>
+<span><span class="va">dtbl_keep</span></span></code></pre></div>
 <p><img src="screenshots/nicfi_mosaics.png"><br></p>
 <p>Then we will extract the <strong>mosaic Quads</strong> of the images for years <strong>2016</strong> and <strong>2018</strong>. The <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics" class="external-link">Planet Web API</a> for the NICFI data includes both <strong>Quads</strong> (<a href="https://developers.planet.com/docs/data/sr-basemaps/" class="external-link">pixel images of size 4096 x 4096</a>) and <strong>tiles</strong> (<a href="https://support.planet.com/hc/en-us/articles/360020018497-Planet-Tile-Streaming-FAQ" class="external-link">pixel images of size 256 x 256</a>) for the global forest areas.</p>
 <p>The <strong>PlanetNICFI</strong> R package makes use of <strong>Quads</strong> because it allows the user to extract a specified Area of Interest (AOI) based on a <strong>bounding box</strong>, as I’ll explain later in this vignette.</p>
@@ -144,57 +144,57 @@
 <p>Therefore, we will first extract the first 10 pages for the Quads for the year 2016 (because a maximum of 10 pages is sufficient and will cover our AOI),</p>
 <p><br></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">index_year_2016</span> <span class="op">=</span> <span class="fl">1</span>
-<span class="va">mosaic_ID_2016</span> <span class="op">=</span> <span class="va">dtbl_keep</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">index_year_2016</span><span class="op">]</span>
-
-<span class="va">quad_files</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,
-                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,
-                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,
-                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,
-                              page_size <span class="op">=</span> <span class="fl">10</span>,
-                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,
-                              verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="va">dtbl_quads</span> <span class="op">=</span> <span class="va">quad_files</span><span class="op">$</span><span class="va">quads</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl_quads</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">index_year_2016</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="va">mosaic_ID_2016</span> <span class="op">=</span> <span class="va">dtbl_keep</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">index_year_2016</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">quad_files</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
+<span>                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,</span>
+<span>                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span>
+<span>                              page_size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
+<span>                              verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dtbl_quads</span> <span class="op">=</span> <span class="va">quad_files</span><span class="op">$</span><span class="va">quads</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl_quads</span><span class="op">)</span></span></code></pre></div>
 <p><img src="screenshots/nicfi_quads.png"></p>
 <p><br></p>
 <p>In the same way as with the <em>mosaics</em>, the output of the <strong>nicfi_quads_bbox</strong> function is a named list (this time of length 3) and we will keep the data.table (<strong>dtbl_quads</strong>) which includes the <strong>id_quad_page</strong>, <strong>quad_link_download</strong> and the <strong>quad_link_thumbnail</strong> columns which are required for our analysis.</p>
 <p><br></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cols_keep_quads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'id_quad_page'</span>, <span class="st">'quad_link_download'</span>, <span class="st">'quad_link_thumbnail'</span><span class="op">)</span>
-<span class="va">dtbl_keep_quads</span> <span class="op">=</span> <span class="va">dtbl_quads</span><span class="op">[</span>, <span class="va">..cols_keep_quads</span><span class="op">]</span>
-<span class="va">dtbl_keep_quads</span><span class="op">[</span>, <span class="st">'id_quad_page'</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cols_keep_quads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'id_quad_page'</span>, <span class="st">'quad_link_download'</span>, <span class="st">'quad_link_thumbnail'</span><span class="op">)</span></span>
+<span><span class="va">dtbl_keep_quads</span> <span class="op">=</span> <span class="va">dtbl_quads</span><span class="op">[</span>, <span class="va">..cols_keep_quads</span><span class="op">]</span></span>
+<span><span class="va">dtbl_keep_quads</span><span class="op">[</span>, <span class="st">'id_quad_page'</span><span class="op">]</span></span></code></pre></div>
 <p><img src="screenshots/quads_page_id.png"></p>
 <p>Although we specified a maximum of 10 pages, as we see from the output, only 2 Quads are returned for our input bounding box.</p>
 <p>In first place we can download and visualize the <strong>thumbnail .png</strong> images of these 2 files, which are small in size. For this purpose we’ll utilize the <a href="https://aria2.github.io/" class="external-link">aria2c</a> download utility. For installation instructions of <strong>aria2c</strong> (on all 3 Operating Systems) have a look at the <a href="https://github.com/mlampros/PlanetNICFI#aria2c" class="external-link">README.md</a> file of the <strong>PlanetNICFI</strong> R package. A nice feature of <strong>aria2c</strong> is that it allows paralleled download of files and it takes also various other parameters such as a <strong>retry limit</strong> or <strong>maximum retries</strong> (you can have a look at the <a href="https://aria2.github.io/manual/en/html/index.html" class="external-link">Documentation</a> of <em>aria2c</em> for more information)</p>
 <p>The <strong>aria2c_download_paths</strong> function of the R package allows the user to format the download web URL paths either of the <strong>thumbnail png</strong> or of the bigger <strong>tif</strong> files,</p>
 <p><br></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">url_paths_2016</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,
-                                       mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,
-                                       quads_output <span class="op">=</span> <span class="va">quad_files</span>,
-                                       img_type <span class="op">=</span> <span class="st">'thumbnail'</span><span class="op">)</span>
-
-<span class="va">url_paths_2016</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">url_paths_2016</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
+<span>                                       mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,</span>
+<span>                                       quads_output <span class="op">=</span> <span class="va">quad_files</span>,</span>
+<span>                                       img_type <span class="op">=</span> <span class="st">'thumbnail'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">url_paths_2016</span></span></code></pre></div>
 <p><br></p>
 <p>and we have also to specify a temporary directory so that we can download all required files,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">temp_dir_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">temp_dir_out</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">temp_dir_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">temp_dir_out</span></span></code></pre></div>
 <p><br></p>
 <p>We set the number of threads to run in parallel equal to the number of the downloaded files and adjust the <em>aria2c</em> parameters too (for a sequential download see the <em>‘sequential_download_paths()’</em> function that doesn’t make use of the <em>‘aria2c’</em> software),</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">all_threads</span> <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">set_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">url_paths_2016</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>
-<span class="va">num_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">set_threads</span> <span class="op">&lt;</span> <span class="va">all_threads</span>, <span class="va">set_threads</span>, <span class="va">all_threads</span><span class="op">)</span>
-<span class="va">aria_args</span> <span class="op">=</span> <span class="st">'--allow-overwrite --file-allocation=none --retry-wait=5 --max-tries=0'</span>
-
-<span class="va">res_downl</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">url_paths_2016</span>,
-                                 default_directory <span class="op">=</span> <span class="va">temp_dir_out</span>,
-                                 threads <span class="op">=</span> <span class="va">num_threads</span>,
-                                 verbose <span class="op">=</span> <span class="cn">FALSE</span>,
-                                 secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">all_threads</span> <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">set_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">url_paths_2016</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span><span class="va">num_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">set_threads</span> <span class="op">&lt;</span> <span class="va">all_threads</span>, <span class="va">set_threads</span>, <span class="va">all_threads</span><span class="op">)</span></span>
+<span><span class="va">aria_args</span> <span class="op">=</span> <span class="st">'--allow-overwrite --file-allocation=none --retry-wait=5 --max-tries=0'</span></span>
+<span></span>
+<span><span class="va">res_downl</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">url_paths_2016</span>,</span>
+<span>                                 default_directory <span class="op">=</span> <span class="va">temp_dir_out</span>,</span>
+<span>                                 threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
+<span>                                 verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                 secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>The following images correspond to the downloaded .png’s of the <strong>year 2016</strong> and show the AOI in low resolution,</p>
 <p><br></p>
@@ -211,16 +211,16 @@
 <p><br></p>
 <p>We can now proceed to download the <strong>.tif</strong> files which are required for the change detection task. We slightly modify the <strong>aria2c_download_paths</strong> function by adjusting the <strong>img_type</strong> parameter to <strong>‘tif’</strong>. The following code snippet downloads the .tif images of <strong>year 2016</strong>,</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">url_paths_2016_tif</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,
-                                           mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,
-                                           quads_output <span class="op">=</span> <span class="va">quad_files</span>,
-                                           img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span>
-
-<span class="va">res_downl_tif</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">url_paths_2016_tif</span>,
-                                     default_directory <span class="op">=</span> <span class="va">temp_dir_out</span>,
-                                     threads <span class="op">=</span> <span class="va">num_threads</span>,
-                                     verbose <span class="op">=</span> <span class="cn">FALSE</span>,
-                                     secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">url_paths_2016_tif</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
+<span>                                           mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,</span>
+<span>                                           quads_output <span class="op">=</span> <span class="va">quad_files</span>,</span>
+<span>                                           img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res_downl_tif</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">url_paths_2016_tif</span>,</span>
+<span>                                     default_directory <span class="op">=</span> <span class="va">temp_dir_out</span>,</span>
+<span>                                     threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
+<span>                                     verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                     secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>We have 2 images for our bounding box area (each one is <em>more than 100 MB</em>), therefore we have to create a <em>single cropped image</em> and for this to happen we’ll have to</p>
 <ul>
@@ -233,99 +233,99 @@
 </ul>
 <p>The following code snippet shows the code of the mentioned steps,</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#..................................................................</span>
-<span class="co"># create a Virtual Raster (VRT) file from the downloaded .tif files</span>
-<span class="co">#..................................................................</span>
-
-<span class="va">VRT_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2016}.vrt"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">res_vrt</span> <span class="op">=</span> <span class="fu"><a href="../reference/create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">temp_dir_out</span>,
-                              output_path_VRT <span class="op">=</span> <span class="va">VRT_out</span>,
-                              file_extension <span class="op">=</span> <span class="st">'.tif'</span>,
-                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-
-<span class="co">#.......................................................</span>
-<span class="co"># Adjust the Coordinate Reference System of the bounding </span>
-<span class="co"># box from 4326 to the projection of the .tif files</span>
-<span class="co">#.......................................................</span>
-
-<span class="va">wkt_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span>
-<span class="va">proj_info</span> <span class="op">=</span> <span class="fu"><a href="../reference/proj_info_extract.html">proj_info_extract</a></span><span class="op">(</span>path_to_raster <span class="op">=</span> <span class="va">VRT_out</span><span class="op">)</span>
-
-<span class="va">wkt_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">wkt_sf</span>, crs <span class="op">=</span> <span class="va">proj_info</span><span class="op">)</span>
-<span class="va">bbx_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">wkt_transf</span><span class="op">)</span>
-
-
-<span class="co">#..............................................................................</span>
-<span class="co"># crop the output .vrt file based on the bounding box and save the output image</span>
-<span class="co">#..............................................................................</span>
-
-<span class="va">pth_crop_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2016}_CROPPED.tif"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">bbx_crop</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmin'</span><span class="op">]</span><span class="op">)</span>,
-                xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmax'</span><span class="op">]</span><span class="op">)</span>,
-                ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymin'</span><span class="op">]</span><span class="op">)</span>,
-                ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymax'</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">warp_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_crop_images.html">nicfi_crop_images</a></span><span class="op">(</span>input_pth <span class="op">=</span> <span class="va">VRT_out</span>,
-                             output_pth <span class="op">=</span> <span class="va">pth_crop_out</span>,
-                             bbox_AOI <span class="op">=</span> <span class="va">bbx_crop</span>,
-                             threads <span class="op">=</span> <span class="va">num_threads</span>,
-                             of <span class="op">=</span> <span class="st">'GTiff'</span>,
-                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,
-                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#..................................................................</span></span>
+<span><span class="co"># create a Virtual Raster (VRT) file from the downloaded .tif files</span></span>
+<span><span class="co">#..................................................................</span></span>
+<span></span>
+<span><span class="va">VRT_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2016}.vrt"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res_vrt</span> <span class="op">=</span> <span class="fu"><a href="../reference/create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">temp_dir_out</span>,</span>
+<span>                              output_path_VRT <span class="op">=</span> <span class="va">VRT_out</span>,</span>
+<span>                              file_extension <span class="op">=</span> <span class="st">'.tif'</span>,</span>
+<span>                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#.......................................................</span></span>
+<span><span class="co"># Adjust the Coordinate Reference System of the bounding </span></span>
+<span><span class="co"># box from 4326 to the projection of the .tif files</span></span>
+<span><span class="co">#.......................................................</span></span>
+<span></span>
+<span><span class="va">wkt_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
+<span><span class="va">proj_info</span> <span class="op">=</span> <span class="fu"><a href="../reference/proj_info_extract.html">proj_info_extract</a></span><span class="op">(</span>path_to_raster <span class="op">=</span> <span class="va">VRT_out</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wkt_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">wkt_sf</span>, crs <span class="op">=</span> <span class="va">proj_info</span><span class="op">)</span></span>
+<span><span class="va">bbx_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">wkt_transf</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#..............................................................................</span></span>
+<span><span class="co"># crop the output .vrt file based on the bounding box and save the output image</span></span>
+<span><span class="co">#..............................................................................</span></span>
+<span></span>
+<span><span class="va">pth_crop_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2016}_CROPPED.tif"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bbx_crop</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmin'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>                xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmax'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>                ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymin'</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>                ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymax'</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">warp_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_crop_images.html">nicfi_crop_images</a></span><span class="op">(</span>input_pth <span class="op">=</span> <span class="va">VRT_out</span>,</span>
+<span>                             output_pth <span class="op">=</span> <span class="va">pth_crop_out</span>,</span>
+<span>                             bbox_AOI <span class="op">=</span> <span class="va">bbx_crop</span>,</span>
+<span>                             threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
+<span>                             of <span class="op">=</span> <span class="st">'GTiff'</span>,</span>
+<span>                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,</span>
+<span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>The next image shows the <strong>cropped area for the year 2016</strong> in high resolution,</p>
 <p><img src="screenshots/cropped_2016.png"></p>
 <p><br></p>
 <p>We can come to the cropped image for the <strong>year 2018</strong> in the same way by adjusting the code in the following way,</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">index_year_2018</span> <span class="op">=</span> <span class="fl">5</span>
-<span class="va">mosaic_ID_2018</span> <span class="op">=</span> <span class="va">dtbl_keep</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">index_year_2018</span><span class="op">]</span>
-
-<span class="va">quad_files_2018</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,
-                                   mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2018</span>,
-                                   bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,
-                                   wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,
-                                   page_size <span class="op">=</span> <span class="fl">10</span>,
-                                   crs_bbox <span class="op">=</span> <span class="fl">4326</span>,
-                                   verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="va">url_paths_2018</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,
-                                       mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2018</span>,
-                                       quads_output <span class="op">=</span> <span class="va">quad_files_2018</span>,
-                                       img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span>
-
-<span class="co">#.....................................................................</span>
-<span class="co"># create a new temporary directory to save the .tif files of year 2018</span>
-<span class="co">#.....................................................................</span>
-
-<span class="va">temp_dir_2018</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="st">'year_2018'</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">temp_dir_2018</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">temp_dir_2018</span><span class="op">)</span>
-
-<span class="va">res_downl_tif_2018</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">url_paths_2018</span>,
-                                          default_directory <span class="op">=</span> <span class="va">temp_dir_2018</span>,
-                                          threads <span class="op">=</span> <span class="va">num_threads</span>,
-                                          verbose <span class="op">=</span> <span class="cn">FALSE</span>,
-                                          secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span>
-
-<span class="va">VRT_out_2018</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_2018</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2018}.vrt"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">res_vrt</span> <span class="op">=</span> <span class="fu"><a href="../reference/create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">temp_dir_2018</span>,
-                              output_path_VRT <span class="op">=</span> <span class="va">VRT_out_2018</span>,
-                              file_extension <span class="op">=</span> <span class="st">'.tif'</span>,
-                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="va">pth_crop_2018</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_2018</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2018}_CROPPED.tif"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">warp_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_crop_images.html">nicfi_crop_images</a></span><span class="op">(</span>input_pth <span class="op">=</span> <span class="va">VRT_out_2018</span>,
-                             output_pth <span class="op">=</span> <span class="va">pth_crop_2018</span>,
-                             bbox_AOI <span class="op">=</span> <span class="va">bbx_crop</span>,
-                             threads <span class="op">=</span> <span class="va">num_threads</span>,
-                             of <span class="op">=</span> <span class="st">'GTiff'</span>,
-                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,
-                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">index_year_2018</span> <span class="op">=</span> <span class="fl">5</span></span>
+<span><span class="va">mosaic_ID_2018</span> <span class="op">=</span> <span class="va">dtbl_keep</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">index_year_2018</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">quad_files_2018</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
+<span>                                   mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2018</span>,</span>
+<span>                                   bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                                   wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span>
+<span>                                   page_size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                                   crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
+<span>                                   verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">url_paths_2018</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
+<span>                                       mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2018</span>,</span>
+<span>                                       quads_output <span class="op">=</span> <span class="va">quad_files_2018</span>,</span>
+<span>                                       img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#.....................................................................</span></span>
+<span><span class="co"># create a new temporary directory to save the .tif files of year 2018</span></span>
+<span><span class="co">#.....................................................................</span></span>
+<span></span>
+<span><span class="va">temp_dir_2018</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="st">'year_2018'</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">temp_dir_2018</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">temp_dir_2018</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res_downl_tif_2018</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">url_paths_2018</span>,</span>
+<span>                                          default_directory <span class="op">=</span> <span class="va">temp_dir_2018</span>,</span>
+<span>                                          threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
+<span>                                          verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                          secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">VRT_out_2018</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_2018</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2018}.vrt"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res_vrt</span> <span class="op">=</span> <span class="fu"><a href="../reference/create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">temp_dir_2018</span>,</span>
+<span>                              output_path_VRT <span class="op">=</span> <span class="va">VRT_out_2018</span>,</span>
+<span>                              file_extension <span class="op">=</span> <span class="st">'.tif'</span>,</span>
+<span>                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pth_crop_2018</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_2018</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID_2018}_CROPPED.tif"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">warp_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/nicfi_crop_images.html">nicfi_crop_images</a></span><span class="op">(</span>input_pth <span class="op">=</span> <span class="va">VRT_out_2018</span>,</span>
+<span>                             output_pth <span class="op">=</span> <span class="va">pth_crop_2018</span>,</span>
+<span>                             bbox_AOI <span class="op">=</span> <span class="va">bbx_crop</span>,</span>
+<span>                             threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
+<span>                             of <span class="op">=</span> <span class="st">'GTiff'</span>,</span>
+<span>                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,</span>
+<span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>The next image shows the <strong>cropped area for the year 2018</strong>,</p>
 <p><img src="screenshots/cropped_2018.png"></p>
@@ -333,12 +333,12 @@
 <p>Now that we have the cropped images for both years we can perform change detection. One method that can be used directly to the cropped images is <strong>Change Vector Analysis</strong>. I’ll use the <a href="https://CRAN.R-project.org/package=RStoolbox" class="external-link">Rstoolbox</a> package which includes the <strong>rasterCVA</strong> function. Based on the documentation “… Change Vector Analysis (CVA) is used to identify spectral changes between two identical scenes which were acquired at different times …”. The following code snippet loads the .tif files and computes CVA using the output image of the year 2018 as a <strong>reference</strong>,</p>
 <p><br></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">orig_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_2018</span><span class="op">)</span>        <span class="co"># image 2018: origin or reference</span>
-<span class="va">change_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_out</span><span class="op">)</span>       <span class="co"># image 2016</span>
-
-<span class="va">bands</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>                                    <span class="co"># bands 1 and 5 depict the difference better</span>
-
-<span class="va">cva</span> <span class="op">=</span> <span class="fu">RStoolbox</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RStoolbox/man/rasterCVA.html" class="external-link">rasterCVA</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">orig_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">change_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">orig_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_2018</span><span class="op">)</span>        <span class="co"># image 2018: origin or reference</span></span>
+<span><span class="va">change_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_out</span><span class="op">)</span>       <span class="co"># image 2016</span></span>
+<span></span>
+<span><span class="va">bands</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>                                    <span class="co"># bands 1 and 5 depict the difference better</span></span>
+<span></span>
+<span><span class="va">cva</span> <span class="op">=</span> <span class="fu">RStoolbox</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RStoolbox/man/rasterCVA.html" class="external-link">rasterCVA</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">orig_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">change_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>To observe the differences in more detail we can arrange the plots side-by-side and add the CVA plot too,</p>
 <p><br></p>
@@ -354,7 +354,7 @@
 </table>
 <p><br></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">sp</span><span class="fu">::</span><span class="fu">plot</span><span class="op">(</span><span class="va">cva</span><span class="op">$</span><span class="va">angle</span>, axes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">sp</span><span class="fu">::</span><span class="fu">plot</span><span class="op">(</span><span class="va">cva</span><span class="op">$</span><span class="va">angle</span>, axes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="center">Change Vector Analysis</th>
@@ -394,7 +394,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

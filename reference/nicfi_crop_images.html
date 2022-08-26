@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -63,152 +63,167 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">nicfi_crop_images</span><span class="op">(</span>
-  <span class="va">input_pth</span>,
-  <span class="va">output_pth</span>,
-  <span class="va">bbox_AOI</span>,
-  threads <span class="op">=</span> <span class="fl">1</span>,
-  of <span class="op">=</span> <span class="st">"GTiff"</span>,
-  resize_method <span class="op">=</span> <span class="st">"lanczos"</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nicfi_crop_images</span><span class="op">(</span></span>
+<span>  <span class="va">input_pth</span>,</span>
+<span>  <span class="va">output_pth</span>,</span>
+<span>  <span class="va">bbox_AOI</span>,</span>
+<span>  threads <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  of <span class="op">=</span> <span class="st">"GTiff"</span>,</span>
+<span>  resize_method <span class="op">=</span> <span class="st">"lanczos"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>input_pth</dt>
 <dd><p>a valid path to either a .tif or a .vrt (virtual raster) file that should be cropped based on the bounding box using 'gdalwarp'</p></dd>
+
+
 <dt>output_pth</dt>
 <dd><p>a valid path to the output .tif file. This file path can also point to a .vrt file by setting the 'of' parameter to 'VRT'</p></dd>
+
+
 <dt>bbox_AOI</dt>
 <dd><p>a list of the format "list(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax)" that includes the bounding box 'xmin', 'xmax', 'ymin', 'ymax' coordinate values of the Area of Interest (AOI)</p></dd>
+
+
 <dt>threads</dt>
 <dd><p>an integer. In case that this parameter is greater than 1 then multiple threads will be utilized in the 'gdalwarp' function</p></dd>
+
+
 <dt>of</dt>
 <dd><p>a character string specifying the format of the saved file. The default is GeoTIFF (GTiff). For more information see the 'gdal_utils' function of the 'sf' package</p></dd>
+
+
 <dt>resize_method</dt>
 <dd><p>a character string specifying the resize method. Can be one of 'near', 'bilinear', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3'. For more information see the 'r' parameter of  the 'gdal_utils' function of the 'sf' package</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>a boolean. If TRUE then information will be printed out in the console</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a logical indicating success (i.e., TRUE); in case of failure, an error is raised</p>
+    
+
+<p>a logical indicating success (i.e., TRUE); in case of failure, an error is raised</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"><span class="co"># first extract the available Mosaics</span></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key'</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
-<span class="r-in">                             type <span class="op">=</span> <span class="st">'monthly'</span>,</span>
-<span class="r-in">                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span>
-<span class="r-in">                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"><span class="co"># keep the mosaic of 'September 2020'</span></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">keep_idx</span> <span class="op">=</span> <span class="fl">1</span></span>
-<span class="r-in"><span class="va">mosaic_ID</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">keep_idx</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#................................................................</span></span>
-<span class="r-in"><span class="co"># then extract the available Quad files for the Mosaic for an AOI</span></span>
-<span class="r-in"><span class="co">#................................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">quad_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
-<span class="r-in">                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span>
-<span class="r-in">                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span>
-<span class="r-in">                              page_size <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#..................................</span></span>
-<span class="r-in"><span class="co"># formated aria2c download weblinks</span></span>
-<span class="r-in"><span class="co">#..................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">web_links_aria2c</span> <span class="op">=</span> <span class="fu"><a href="aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
-<span class="r-in">                                         mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span>
-<span class="r-in">                                         quads_output <span class="op">=</span> <span class="va">quad_files</span>,</span>
-<span class="r-in">                                         img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.........................................................</span></span>
-<span class="r-in"><span class="co"># download the .tif files that intersect with the bbox AOI</span></span>
-<span class="r-in"><span class="co">#.........................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">temp_dir_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">all_threads</span> <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">set_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">web_links_aria2c</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
-<span class="r-in"><span class="va">num_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">set_threads</span> <span class="op">&lt;</span> <span class="va">all_threads</span>, <span class="va">set_threads</span>, <span class="va">all_threads</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">aria_args</span> <span class="op">=</span> <span class="st">'--allow-overwrite --file-allocation=none --retry-wait=5 --max-tries=0'</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res_downl</span> <span class="op">=</span> <span class="fu"><a href="aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">web_links_aria2c</span>,</span>
-<span class="r-in">                                 default_directory <span class="op">=</span> <span class="va">temp_dir_out</span>,</span>
-<span class="r-in">                                 user <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                                 password <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                                 threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
-<span class="r-in">                                 verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                                 secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#........................................</span></span>
-<span class="r-in"><span class="co"># create a Virtual Raster (VRT) file from</span></span>
-<span class="r-in"><span class="co"># the downloaded .tif files</span></span>
-<span class="r-in"><span class="co">#........................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">VRT_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID}.vrt"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res_vrt</span> <span class="op">=</span> <span class="fu"><a href="create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">temp_dir_out</span>,</span>
-<span class="r-in">                              output_path_VRT <span class="op">=</span> <span class="va">VRT_out</span>,</span>
-<span class="r-in">                              file_extension <span class="op">=</span> <span class="st">'.tif'</span>,</span>
-<span class="r-in">                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................................</span></span>
-<span class="r-in"><span class="co"># Adjust the Coordinate Reference System of the</span></span>
-<span class="r-in"><span class="co"># bounding box from 4326 to the one of the .tif files</span></span>
-<span class="r-in"><span class="co">#....................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wkt_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">proj_info</span> <span class="op">=</span> <span class="fu"><a href="proj_info_extract.html">proj_info_extract</a></span><span class="op">(</span>path_to_raster <span class="op">=</span> <span class="va">VRT_out</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wkt_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">wkt_sf</span>, crs <span class="op">=</span> <span class="va">proj_info</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bbx_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">wkt_transf</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................................</span></span>
-<span class="r-in"><span class="co"># crop the output .vrt file based on the bounding box</span></span>
-<span class="r-in"><span class="co">#....................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">pth_crop_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID}_CROPPED.tif"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">bbx_crop</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmin'</span><span class="op">]</span><span class="op">)</span>,</span>
-<span class="r-in">                xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmax'</span><span class="op">]</span><span class="op">)</span>,</span>
-<span class="r-in">                ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymin'</span><span class="op">]</span><span class="op">)</span>,</span>
-<span class="r-in">                ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymax'</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">warp_obj</span> <span class="op">=</span> <span class="fu">nicfi_crop_images</span><span class="op">(</span>input_pth <span class="op">=</span> <span class="va">VRT_out</span>,</span>
-<span class="r-in">                             output_pth <span class="op">=</span> <span class="va">pth_crop_out</span>,</span>
-<span class="r-in">                             bbox_AOI <span class="op">=</span> <span class="va">bbx_crop</span>,</span>
-<span class="r-in">                             threads <span class="op">=</span> <span class="va">num_threads</span>,</span>
-<span class="r-in">                             of <span class="op">=</span> <span class="st">'GTiff'</span>,</span>
-<span class="r-in">                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,</span>
-<span class="r-in">                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span><span class="co"># first extract the available Mosaics</span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key'</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span></span>
+<span class="r-in"><span>                             type <span class="op">=</span> <span class="st">'monthly'</span>,</span></span>
+<span class="r-in"><span>                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span></span>
+<span class="r-in"><span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span><span class="co"># keep the mosaic of 'September 2020'</span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">keep_idx</span> <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">mosaic_ID</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">keep_idx</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#................................................................</span></span></span>
+<span class="r-in"><span><span class="co"># then extract the available Quad files for the Mosaic for an AOI</span></span></span>
+<span class="r-in"><span><span class="co">#................................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">quad_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_quads_bbox.html">nicfi_quads_bbox</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span></span>
+<span class="r-in"><span>                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span></span>
+<span class="r-in"><span>                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span></span>
+<span class="r-in"><span>                              page_size <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#..................................</span></span></span>
+<span class="r-in"><span><span class="co"># formated aria2c download weblinks</span></span></span>
+<span class="r-in"><span><span class="co">#..................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">web_links_aria2c</span> <span class="op">=</span> <span class="fu"><a href="aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span></span>
+<span class="r-in"><span>                                         mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span></span>
+<span class="r-in"><span>                                         quads_output <span class="op">=</span> <span class="va">quad_files</span>,</span></span>
+<span class="r-in"><span>                                         img_type <span class="op">=</span> <span class="st">'tif'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.........................................................</span></span></span>
+<span class="r-in"><span><span class="co"># download the .tif files that intersect with the bbox AOI</span></span></span>
+<span class="r-in"><span><span class="co">#.........................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">temp_dir_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">all_threads</span> <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">set_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">web_links_aria2c</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="va">num_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">set_threads</span> <span class="op">&lt;</span> <span class="va">all_threads</span>, <span class="va">set_threads</span>, <span class="va">all_threads</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">aria_args</span> <span class="op">=</span> <span class="st">'--allow-overwrite --file-allocation=none --retry-wait=5 --max-tries=0'</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res_downl</span> <span class="op">=</span> <span class="fu"><a href="aria2c_bulk_donwload.html">aria2c_bulk_donwload</a></span><span class="op">(</span>vector_or_file_path <span class="op">=</span> <span class="va">web_links_aria2c</span>,</span></span>
+<span class="r-in"><span>                                 default_directory <span class="op">=</span> <span class="va">temp_dir_out</span>,</span></span>
+<span class="r-in"><span>                                 user <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                                 password <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                                 threads <span class="op">=</span> <span class="va">num_threads</span>,</span></span>
+<span class="r-in"><span>                                 verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                                 secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#........................................</span></span></span>
+<span class="r-in"><span><span class="co"># create a Virtual Raster (VRT) file from</span></span></span>
+<span class="r-in"><span><span class="co"># the downloaded .tif files</span></span></span>
+<span class="r-in"><span><span class="co">#........................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">VRT_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID}.vrt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res_vrt</span> <span class="op">=</span> <span class="fu"><a href="create_VRT_from_dir.html">create_VRT_from_dir</a></span><span class="op">(</span>dir_tifs <span class="op">=</span> <span class="va">temp_dir_out</span>,</span></span>
+<span class="r-in"><span>                              output_path_VRT <span class="op">=</span> <span class="va">VRT_out</span>,</span></span>
+<span class="r-in"><span>                              file_extension <span class="op">=</span> <span class="st">'.tif'</span>,</span></span>
+<span class="r-in"><span>                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................................</span></span></span>
+<span class="r-in"><span><span class="co"># Adjust the Coordinate Reference System of the</span></span></span>
+<span class="r-in"><span><span class="co"># bounding box from 4326 to the one of the .tif files</span></span></span>
+<span class="r-in"><span><span class="co">#....................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wkt_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="va">WKT</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">proj_info</span> <span class="op">=</span> <span class="fu"><a href="proj_info_extract.html">proj_info_extract</a></span><span class="op">(</span>path_to_raster <span class="op">=</span> <span class="va">VRT_out</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wkt_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">wkt_sf</span>, crs <span class="op">=</span> <span class="va">proj_info</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bbx_transf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">wkt_transf</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................................</span></span></span>
+<span class="r-in"><span><span class="co"># crop the output .vrt file based on the bounding box</span></span></span>
+<span class="r-in"><span><span class="co">#....................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">pth_crop_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_dir_out</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{mosaic_ID}_CROPPED.tif"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">bbx_crop</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmin'</span><span class="op">]</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'xmax'</span><span class="op">]</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymin'</span><span class="op">]</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                ymax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bbx_transf</span><span class="op">[</span><span class="st">'ymax'</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">warp_obj</span> <span class="op">=</span> <span class="fu">nicfi_crop_images</span><span class="op">(</span>input_pth <span class="op">=</span> <span class="va">VRT_out</span>,</span></span>
+<span class="r-in"><span>                             output_pth <span class="op">=</span> <span class="va">pth_crop_out</span>,</span></span>
+<span class="r-in"><span>                             bbox_AOI <span class="op">=</span> <span class="va">bbx_crop</span>,</span></span>
+<span class="r-in"><span>                             threads <span class="op">=</span> <span class="va">num_threads</span>,</span></span>
+<span class="r-in"><span>                             of <span class="op">=</span> <span class="st">'GTiff'</span>,</span></span>
+<span class="r-in"><span>                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,</span></span>
+<span class="r-in"><span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -223,7 +238,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

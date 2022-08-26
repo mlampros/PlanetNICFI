@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PlanetNICFI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -63,37 +63,52 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">nicfi_quads_bbox</span><span class="op">(</span>
-  <span class="va">planet_api_key</span>,
-  <span class="va">mosaic_id</span>,
-  bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,
-  wkt_AOI <span class="op">=</span> <span class="cn">NULL</span>,
-  page_size <span class="op">=</span> <span class="fl">50</span>,
-  crs_bbox <span class="op">=</span> <span class="fl">4326</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nicfi_quads_bbox</span><span class="op">(</span></span>
+<span>  <span class="va">planet_api_key</span>,</span>
+<span>  <span class="va">mosaic_id</span>,</span>
+<span>  bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  wkt_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page_size <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>planet_api_key</dt>
 <dd><p>a character string specifying the Planet API key (see the references on how to acquire this key)</p></dd>
+
+
 <dt>mosaic_id</dt>
 <dd><p>a character string specifying the 'Mosaic' id as returned from the 'nicfi_mosaics()' function</p></dd>
+
+
 <dt>bbox_AOI</dt>
 <dd><p>either NULL or a list of the format "list(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax)" that includes the bounding box 'xmin', 'xmax', 'ymin', 'ymax' coordinate values of the Area of Interest (AOI) based on which the intersected NICFI Quads have to be computed</p></dd>
+
+
 <dt>wkt_AOI</dt>
 <dd><p>either NULL or a character string specifying the Well Known Text (WKT)  of the Area of Interest (AOI) based on which the intersected NICFI Quads have to be computed</p></dd>
+
+
 <dt>page_size</dt>
 <dd><p>an integer value specifying the number of Quads to return (that intersect with the input bounding box or Well known text)</p></dd>
+
+
 <dt>crs_bbox</dt>
 <dd><p>an integer specifying the Coordinates Reference System for the bounding box computation only.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>a boolean. If TRUE then information will be printed out in the console</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an object of class list</p>
+    
+
+<p>an object of class list</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -102,46 +117,46 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"><span class="co"># first extract the available Mosaics</span></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key'</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
-<span class="r-in">                             type <span class="op">=</span> <span class="st">'monthly'</span>,</span>
-<span class="r-in">                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span>
-<span class="r-in">                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"><span class="co"># keep the mosaic of 'September 2020'</span></span>
-<span class="r-in"><span class="co">#....................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">keep_idx</span> <span class="op">=</span> <span class="fl">1</span></span>
-<span class="r-in"><span class="va">mosaic_ID</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">keep_idx</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#.....................................................</span></span>
-<span class="r-in"><span class="co"># then extract the available Quad files for the Mosaic</span></span>
-<span class="r-in"><span class="co">#.....................................................</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">quad_files</span> <span class="op">=</span> <span class="fu">nicfi_quads_bbox</span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span>
-<span class="r-in">                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span>
-<span class="r-in">                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span class="r-in">                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span>
-<span class="r-in">                              page_size <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span>
-<span class="r-in">                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mlampros/PlanetNICFI" class="external-link">PlanetNICFI</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span><span class="co"># first extract the available Mosaics</span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key'</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mosaic_files</span> <span class="op">=</span> <span class="fu"><a href="nicfi_mosaics.html">nicfi_mosaics</a></span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span></span>
+<span class="r-in"><span>                             type <span class="op">=</span> <span class="st">'monthly'</span>,</span></span>
+<span class="r-in"><span>                             crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                             URL <span class="op">=</span> <span class="st">'https://api.planet.com/basemaps/v1/mosaics'</span>,</span></span>
+<span class="r-in"><span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span><span class="co"># keep the mosaic of 'September 2020'</span></span></span>
+<span class="r-in"><span><span class="co">#....................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">keep_idx</span> <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">mosaic_ID</span> <span class="op">=</span> <span class="va">mosaic_files</span><span class="op">$</span><span class="va">dtbl_mosaic</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">keep_idx</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#.....................................................</span></span></span>
+<span class="r-in"><span><span class="co"># then extract the available Quad files for the Mosaic</span></span></span>
+<span class="r-in"><span><span class="co">#.....................................................</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">quad_files</span> <span class="op">=</span> <span class="fu">nicfi_quads_bbox</span><span class="op">(</span>planet_api_key <span class="op">=</span> <span class="va">api_key</span>,</span></span>
+<span class="r-in"><span>                              mosaic_id <span class="op">=</span> <span class="va">mosaic_ID</span>,</span></span>
+<span class="r-in"><span>                              bbox_AOI <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>                              wkt_AOI <span class="op">=</span> <span class="va">WKT</span>,</span></span>
+<span class="r-in"><span>                              page_size <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                              crs_bbox <span class="op">=</span> <span class="fl">4326</span>,</span></span>
+<span class="r-in"><span>                              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -156,7 +171,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
