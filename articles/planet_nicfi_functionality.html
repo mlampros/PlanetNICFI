@@ -75,10 +75,11 @@
 
       
 
-      </header><script src="planet_nicfi_functionality_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Norway’s International Climate and Forest Initiative (NICFI) using Planet Satellite Imagery in R</h1>
+      <h1 data-toc-skip>Norway’s International Climate and Forest
+Initiative (NICFI) using Planet Satellite Imagery in R</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/mlampros/PlanetNICFI/blob/HEAD/vignettes/planet_nicfi_functionality.Rmd" class="external-link"><code>vignettes/planet_nicfi_functionality.Rmd</code></a></small>
@@ -88,29 +89,54 @@
 
     
     
-<p>This vignette shows the functionality of the <a href="https://CRAN.R-project.org/package=PlanetNICFI" class="external-link">PlanetNICFI</a> R package based on a <em>change detection</em> use case. The official website of <a href="https://www.nicfi.no/" class="external-link">NICFI</a> (Norway’s International Climate and Forest Initiative) includes all the details about the initiative against global deforestation. This initiative was also covered extensively on the web especially from the <a href="https://www.planet.com/pulse/universal-access-to-satellite-monitoring-paves-the-way-to-protect-the-worlds-tropical-forests/" class="external-link">provider of the free Satellite Imagery</a>. Users have the opportunity to download high-resolution imagery of forests globally using a <a href="https://www.planet.com/nicfi/" class="external-link">simple sign up form</a>.</p>
-<p>To take advantage of the <strong>PlanetNICFI</strong> R package you will need also an <strong>API key</strong> which you can receive once you are registered. For more details see the <a href="https://developers.planet.com/quickstart/apis/" class="external-link">Getting Started with Planet APIs</a> website. <br></p>
-<p>The <strong>Documentation</strong> of the R package includes details on how to download and process <strong>monthly</strong> data for an Area of Interest (AOI), however, in this vignette I’ll use <strong>bi-annual</strong> data because they are available since <strong>2015</strong> whereas <strong>monthly</strong> data is available since <strong>September 2020</strong>.</p>
+<p>This vignette shows the functionality of the <a href="https://CRAN.R-project.org/package=PlanetNICFI" class="external-link">PlanetNICFI</a> R
+package based on a <em>change detection</em> use case. The official
+website of <a href="https://www.nicfi.no/" class="external-link">NICFI</a> (Norway’s
+International Climate and Forest Initiative) includes all the details
+about the initiative against global deforestation. This initiative was
+also covered extensively on the web especially from the <a href="https://www.planet.com/pulse/universal-access-to-satellite-monitoring-paves-the-way-to-protect-the-worlds-tropical-forests/" class="external-link">provider
+of the free Satellite Imagery</a>. Users have the opportunity to
+download high-resolution imagery of forests globally using a <a href="https://www.planet.com/nicfi/" class="external-link">simple sign up form</a>.</p>
+<p>To take advantage of the <strong>PlanetNICFI</strong> R package you
+will need also an <strong>API key</strong> which you can receive once
+you are registered. For more details see the <a href="https://developers.planet.com/quickstart/apis/" class="external-link">Getting Started
+with Planet APIs</a> website. <br></p>
+<p>The <strong>Documentation</strong> of the R package includes details
+on how to download and process <strong>monthly</strong> data for an Area
+of Interest (AOI), however, in this vignette I’ll use
+<strong>bi-annual</strong> data because they are available since
+<strong>2015</strong> whereas <strong>monthly</strong> data is available
+since <strong>September 2020</strong>.</p>
 <p><br></p>
 <div class="section level3">
 <h3 id="change-detection-using-bi-annual-imagery">Change Detection (using bi-annual Imagery)<a class="anchor" aria-label="anchor" href="#change-detection-using-bi-annual-imagery"></a>
 </h3>
 <p><br></p>
-<p>To spot deforestation areas we will perform change detection based on a <strong>Sugarcane cultivation area in Bolivia</strong>. This use case is <a href="https://eros.usgs.gov/image-gallery/earthshot/deforestation" class="external-link">not new</a> and there is also a small <a href="https://www.youtube.com/watch?v=d1sq5M0vWwM" class="external-link">YouTube video</a> that shows the change of the area over time (<strong>from 2016 to 2018</strong>). For this change detection task we will use two images:</p>
+<p>To spot deforestation areas we will perform change detection based on
+a <strong>Sugarcane cultivation area in Bolivia</strong>. This use case
+is <a href="https://eros.usgs.gov/image-gallery/earthshot/deforestation" class="external-link">not
+new</a> and there is also a small <a href="https://www.youtube.com/watch?v=d1sq5M0vWwM" class="external-link">YouTube video</a>
+that shows the change of the area over time (<strong>from 2016 to
+2018</strong>). For this change detection task we will use two
+images:</p>
 <ul>
-<li>the <strong>first bi-annual</strong> Image of <strong>2016</strong>
+<li>the <strong>first bi-annual</strong> Image of
+<strong>2016</strong>
 </li>
-<li>the <strong>first bi-annual</strong> Image of <strong>2018</strong>
+<li>the <strong>first bi-annual</strong> Image of
+<strong>2018</strong>
 </li>
 </ul>
-<p>and the following Well Known Text (WKT) as a cropped area utilizing <a href="http://geojson.io" class="external-link">geojson.io</a>,</p>
+<p>and the following Well Known Text (WKT) as a cropped area utilizing
+<a href="http://geojson.io" class="external-link">geojson.io</a>,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wkt_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'data_files/Sugar_Cane_Bolivia.wkt'</span>, package <span class="op">=</span> <span class="st">"PlanetNICFI"</span><span class="op">)</span></span>
 <span><span class="va">WKT</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wkt_file</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">WKT</span></span></code></pre></div>
 <p><img src="screenshots/wkt.png"></p>
 <p><br></p>
-<p>First, we have to create a variable and store the <strong>API key</strong> (which a user receives as explained previously),</p>
+<p>First, we have to create a variable and store the <strong>API
+key</strong> (which a user receives as explained previously),</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">api_key</span> <span class="op">=</span> <span class="st">'use_your_planet_nicfi_API_key_here'</span></span></code></pre></div>
 <p><br></p>
@@ -128,20 +154,38 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl</span><span class="op">)</span></span></code></pre></div>
 <p><img src="screenshots/colnames_mosaics.png"></p>
 <p><br></p>
-<p>The output of the <strong>nicfi_mosaics</strong> function is a named list of length 2 and we will keep the data.table (<strong>dtbl_mosaic</strong>) which includes the <strong>mosaic id’s</strong> and the <strong>bi-annual Dates</strong> (among other columns) as the previous and the next output shows,</p>
+<p>The output of the <strong>nicfi_mosaics</strong> function is a named
+list of length 2 and we will keep the data.table
+(<strong>dtbl_mosaic</strong>) which includes the <strong>mosaic
+id’s</strong> and the <strong>bi-annual Dates</strong> (among other
+columns) as the previous and the next output shows,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cols_keep</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'id'</span>, <span class="st">'first_acquired'</span>, <span class="st">'last_acquired'</span><span class="op">)</span></span>
 <span><span class="va">dtbl_keep</span> <span class="op">=</span> <span class="va">dtbl</span><span class="op">[</span>, <span class="va">..cols_keep</span><span class="op">]</span></span>
 <span><span class="va">dtbl_keep</span></span></code></pre></div>
 <p><img src="screenshots/nicfi_mosaics.png"><br></p>
-<p>Then we will extract the <strong>mosaic Quads</strong> of the images for years <strong>2016</strong> and <strong>2018</strong>. The <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics" class="external-link">Planet Web API</a> for the NICFI data includes both <strong>Quads</strong> (<a href="https://developers.planet.com/docs/data/sr-basemaps/" class="external-link">pixel images of size 4096 x 4096</a>) and <strong>tiles</strong> (<a href="https://support.planet.com/hc/en-us/articles/360020018497-Planet-Tile-Streaming-FAQ" class="external-link">pixel images of size 256 x 256</a>) for the global forest areas.</p>
-<p>The <strong>PlanetNICFI</strong> R package makes use of <strong>Quads</strong> because it allows the user to extract a specified Area of Interest (AOI) based on a <strong>bounding box</strong>, as I’ll explain later in this vignette.</p>
-<p>In the previous subset <strong>dtbl_keep</strong> data.table we see that</p>
+<p>Then we will extract the <strong>mosaic Quads</strong> of the images
+for years <strong>2016</strong> and <strong>2018</strong>. The <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics" class="external-link">Planet
+Web API</a> for the NICFI data includes both <strong>Quads</strong> (<a href="https://developers.planet.com/docs/data/sr-basemaps/" class="external-link">pixel images
+of size 4096 x 4096</a>) and <strong>tiles</strong> (<a href="https://support.planet.com/hc/en-us/articles/360020018497-Planet-Tile-Streaming-FAQ" class="external-link">pixel
+images of size 256 x 256</a>) for the global forest areas.</p>
+<p>The <strong>PlanetNICFI</strong> R package makes use of
+<strong>Quads</strong> because it allows the user to extract a specified
+Area of Interest (AOI) based on a <strong>bounding box</strong>, as I’ll
+explain later in this vignette.</p>
+<p>In the previous subset <strong>dtbl_keep</strong> data.table we see
+that</p>
 <ul>
-<li>the <strong>first bi-annual</strong> image of <strong>2016</strong> is in <strong>row 1</strong> (<strong>2015-12-01 to 2016-06-01</strong>) and</li>
-<li>the <strong>first bi-annual</strong> image of <strong>2018</strong> is in <strong>row 5</strong> (<strong>2017-12-01 to 2018-06-01</strong>)</li>
+<li>the <strong>first bi-annual</strong> image of <strong>2016</strong>
+is in <strong>row 1</strong> (<strong>2015-12-01 to 2016-06-01</strong>)
+and</li>
+<li>the <strong>first bi-annual</strong> image of <strong>2018</strong>
+is in <strong>row 5</strong> (<strong>2017-12-01 to
+2018-06-01</strong>)</li>
 </ul>
-<p>Therefore, we will first extract the first 10 pages for the Quads for the year 2016 (because a maximum of 10 pages is sufficient and will cover our AOI),</p>
+<p>Therefore, we will first extract the first 10 pages for the Quads for
+the year 2016 (because a maximum of 10 pages is sufficient and will
+cover our AOI),</p>
 <p><br></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index_year_2016</span> <span class="op">=</span> <span class="fl">1</span></span>
@@ -159,16 +203,37 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dtbl_quads</span><span class="op">)</span></span></code></pre></div>
 <p><img src="screenshots/nicfi_quads.png"></p>
 <p><br></p>
-<p>In the same way as with the <em>mosaics</em>, the output of the <strong>nicfi_quads_bbox</strong> function is a named list (this time of length 3) and we will keep the data.table (<strong>dtbl_quads</strong>) which includes the <strong>id_quad_page</strong>, <strong>quad_link_download</strong> and the <strong>quad_link_thumbnail</strong> columns which are required for our analysis.</p>
+<p>In the same way as with the <em>mosaics</em>, the output of the
+<strong>nicfi_quads_bbox</strong> function is a named list (this time of
+length 3) and we will keep the data.table (<strong>dtbl_quads</strong>)
+which includes the <strong>id_quad_page</strong>,
+<strong>quad_link_download</strong> and the
+<strong>quad_link_thumbnail</strong> columns which are required for our
+analysis.</p>
 <p><br></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cols_keep_quads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'id_quad_page'</span>, <span class="st">'quad_link_download'</span>, <span class="st">'quad_link_thumbnail'</span><span class="op">)</span></span>
 <span><span class="va">dtbl_keep_quads</span> <span class="op">=</span> <span class="va">dtbl_quads</span><span class="op">[</span>, <span class="va">..cols_keep_quads</span><span class="op">]</span></span>
 <span><span class="va">dtbl_keep_quads</span><span class="op">[</span>, <span class="st">'id_quad_page'</span><span class="op">]</span></span></code></pre></div>
 <p><img src="screenshots/quads_page_id.png"></p>
-<p>Although we specified a maximum of 10 pages, as we see from the output, only 2 Quads are returned for our input bounding box.</p>
-<p>In first place we can download and visualize the <strong>thumbnail .png</strong> images of these 2 files, which are small in size. For this purpose we’ll utilize the <a href="https://aria2.github.io/" class="external-link">aria2c</a> download utility. For installation instructions of <strong>aria2c</strong> (on all 3 Operating Systems) have a look at the <a href="https://github.com/mlampros/PlanetNICFI#aria2c" class="external-link">README.md</a> file of the <strong>PlanetNICFI</strong> R package. A nice feature of <strong>aria2c</strong> is that it allows paralleled download of files and it takes also various other parameters such as a <strong>retry limit</strong> or <strong>maximum retries</strong> (you can have a look at the <a href="https://aria2.github.io/manual/en/html/index.html" class="external-link">Documentation</a> of <em>aria2c</em> for more information)</p>
-<p>The <strong>aria2c_download_paths</strong> function of the R package allows the user to format the download web URL paths either of the <strong>thumbnail png</strong> or of the bigger <strong>tif</strong> files,</p>
+<p>Although we specified a maximum of 10 pages, as we see from the
+output, only 2 Quads are returned for our input bounding box.</p>
+<p>In first place we can download and visualize the <strong>thumbnail
+.png</strong> images of these 2 files, which are small in size. For this
+purpose we’ll utilize the <a href="https://aria2.github.io/" class="external-link">aria2c</a>
+download utility. For installation instructions of
+<strong>aria2c</strong> (on all 3 Operating Systems) have a look at the
+<a href="https://github.com/mlampros/PlanetNICFI#aria2c" class="external-link">README.md</a>
+file of the <strong>PlanetNICFI</strong> R package. A nice feature of
+<strong>aria2c</strong> is that it allows paralleled download of files
+and it takes also various other parameters such as a <strong>retry
+limit</strong> or <strong>maximum retries</strong> (you can have a look
+at the <a href="https://aria2.github.io/manual/en/html/index.html" class="external-link">Documentation</a>
+of <em>aria2c</em> for more information)</p>
+<p>The <strong>aria2c_download_paths</strong> function of the R package
+allows the user to format the download web URL paths either of the
+<strong>thumbnail png</strong> or of the bigger <strong>tif</strong>
+files,</p>
 <p><br></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">url_paths_2016</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
@@ -178,12 +243,17 @@
 <span></span>
 <span><span class="va">url_paths_2016</span></span></code></pre></div>
 <p><br></p>
-<p>and we have also to specify a temporary directory so that we can download all required files,</p>
+<p>and we have also to specify a temporary directory so that we can
+download all required files,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp_dir_out</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp_dir_out</span></span></code></pre></div>
 <p><br></p>
-<p>We set the number of threads to run in parallel equal to the number of the downloaded files and adjust the <em>aria2c</em> parameters too (for a sequential download see the <em>‘sequential_download_paths()’</em> function that doesn’t make use of the <em>‘aria2c’</em> software),</p>
+<p>We set the number of threads to run in parallel equal to the number
+of the downloaded files and adjust the <em>aria2c</em> parameters too
+(for a sequential download see the
+<em>‘sequential_download_paths()’</em> function that doesn’t make use of
+the <em>‘aria2c’</em> software),</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_threads</span> <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">set_threads</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">url_paths_2016</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
@@ -196,9 +266,14 @@
 <span>                                 verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                 secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The following images correspond to the downloaded .png’s of the <strong>year 2016</strong> and show the AOI in low resolution,</p>
+<p>The following images correspond to the downloaded .png’s of the
+<strong>year 2016</strong> and show the AOI in low resolution,</p>
 <p><br></p>
 <table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
 <thead><tr class="header">
 <th align="center">Image (a)</th>
 <th align="center">Image (b)</th>
@@ -209,7 +284,12 @@
 </tr></tbody>
 </table>
 <p><br></p>
-<p>We can now proceed to download the <strong>.tif</strong> files which are required for the change detection task. We slightly modify the <strong>aria2c_download_paths</strong> function by adjusting the <strong>img_type</strong> parameter to <strong>‘tif’</strong>. The following code snippet downloads the .tif images of <strong>year 2016</strong>,</p>
+<p>We can now proceed to download the <strong>.tif</strong> files which
+are required for the change detection task. We slightly modify the
+<strong>aria2c_download_paths</strong> function by adjusting the
+<strong>img_type</strong> parameter to <strong>‘tif’</strong>. The
+following code snippet downloads the .tif images of <strong>year
+2016</strong>,</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">url_paths_2016_tif</span> <span class="op">=</span> <span class="fu"><a href="../reference/aria2c_download_paths.html">aria2c_download_paths</a></span><span class="op">(</span>mosaic_output <span class="op">=</span> <span class="va">mosaic_files</span>,</span>
 <span>                                           mosaic_id <span class="op">=</span> <span class="va">mosaic_ID_2016</span>,</span>
@@ -222,14 +302,19 @@
 <span>                                     verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                     secondary_args_aria <span class="op">=</span> <span class="va">aria_args</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>We have 2 images for our bounding box area (each one is <em>more than 100 MB</em>), therefore we have to create a <em>single cropped image</em> and for this to happen we’ll have to</p>
+<p>We have 2 images for our bounding box area (each one is <em>more than
+100 MB</em>), therefore we have to create a <em>single cropped
+image</em> and for this to happen we’ll have to</p>
 <ul>
 <li>
-<strong>create a Virtual Raster</strong> file of the 2 .tif files</li>
+<strong>create a Virtual Raster</strong> file of the 2 .tif
+files</li>
 <li>
-<strong>transform the projection</strong> of the bounding box (which is ‘EPSG:4326’) to the projection of the downloaded .tif files</li>
+<strong>transform the projection</strong> of the bounding box (which
+is ‘EPSG:4326’) to the projection of the downloaded .tif files</li>
 <li>
-<strong>crop the Virtual Raster</strong> using the transformed bounding box to match our AOI</li>
+<strong>crop the Virtual Raster</strong> using the transformed
+bounding box to match our AOI</li>
 </ul>
 <p>The following code snippet shows the code of the mentioned steps,</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -276,10 +361,12 @@
 <span>                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,</span>
 <span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The next image shows the <strong>cropped area for the year 2016</strong> in high resolution,</p>
+<p>The next image shows the <strong>cropped area for the year
+2016</strong> in high resolution,</p>
 <p><img src="screenshots/cropped_2016.png"></p>
 <p><br></p>
-<p>We can come to the cropped image for the <strong>year 2018</strong> in the same way by adjusting the code in the following way,</p>
+<p>We can come to the cropped image for the <strong>year 2018</strong>
+in the same way by adjusting the code in the following way,</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index_year_2018</span> <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="va">mosaic_ID_2018</span> <span class="op">=</span> <span class="va">dtbl_keep</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="va">index_year_2018</span><span class="op">]</span></span>
@@ -327,10 +414,19 @@
 <span>                             resize_method <span class="op">=</span> <span class="st">'lanczos'</span>,</span>
 <span>                             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The next image shows the <strong>cropped area for the year 2018</strong>,</p>
+<p>The next image shows the <strong>cropped area for the year
+2018</strong>,</p>
 <p><img src="screenshots/cropped_2018.png"></p>
 <p><br></p>
-<p>Now that we have the cropped images for both years we can perform change detection. One method that can be used directly to the cropped images is <strong>Change Vector Analysis</strong>. I’ll use the <a href="https://CRAN.R-project.org/package=RStoolbox" class="external-link">Rstoolbox</a> package which includes the <strong>rasterCVA</strong> function. Based on the documentation “… Change Vector Analysis (CVA) is used to identify spectral changes between two identical scenes which were acquired at different times …”. The following code snippet loads the .tif files and computes CVA using the output image of the year 2018 as a <strong>reference</strong>,</p>
+<p>Now that we have the cropped images for both years we can perform
+change detection. One method that can be used directly to the cropped
+images is <strong>Change Vector Analysis</strong>. I’ll use the <a href="https://CRAN.R-project.org/package=RStoolbox" class="external-link">Rstoolbox</a>
+package which includes the <strong>rasterCVA</strong> function. Based on
+the documentation “… Change Vector Analysis (CVA) is used to identify
+spectral changes between two identical scenes which were acquired at
+different times …”. The following code snippet loads the .tif files and
+computes CVA using the output image of the year 2018 as a
+<strong>reference</strong>,</p>
 <p><br></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">orig_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_2018</span><span class="op">)</span>        <span class="co"># image 2018: origin or reference</span></span>
@@ -340,9 +436,14 @@
 <span></span>
 <span><span class="va">cva</span> <span class="op">=</span> <span class="fu">RStoolbox</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RStoolbox/man/rasterCVA.html" class="external-link">rasterCVA</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">orig_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">change_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>To observe the differences in more detail we can arrange the plots side-by-side and add the CVA plot too,</p>
+<p>To observe the differences in more detail we can arrange the plots
+side-by-side and add the CVA plot too,</p>
 <p><br></p>
 <table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
 <thead><tr class="header">
 <th align="center">AOI (2016)</th>
 <th align="center">AOI (2018)</th>
@@ -364,7 +465,9 @@
 </table>
 <p><img src="screenshots/CVA.png" width="1050" height="500"></p>
 <p><br></p>
-<p>By solely plotting the <strong>angle</strong> of the <strong>Change Vector Analysis</strong> we can clearly see the deforested areas in green color.</p>
+<p>By solely plotting the <strong>angle</strong> of the <strong>Change
+Vector Analysis</strong> we can clearly see the deforested areas in
+green color.</p>
 <p><br></p>
 </div>
 <div class="section level3">
@@ -372,8 +475,10 @@
 <strong>Attribution:</strong><a class="anchor" aria-label="anchor" href="#attribution"></a>
 </h3>
 <ul>
-<li><strong>Imagery 2021 Planet Labs Inc. All use subject to the Participant License Agreement</strong></li>
-<li><strong>Norway’s International Climate and Forest Initiative (NICFI), <a href="https://www.nicfi.no/" class="external-link uri">https://www.nicfi.no/</a></strong></li>
+<li><strong>Imagery 2021 Planet Labs Inc. All use subject to the
+Participant License Agreement</strong></li>
+<li><strong>Norway’s International Climate and Forest Initiative
+(NICFI), <a href="https://www.nicfi.no/" class="external-link uri">https://www.nicfi.no/</a></strong></li>
 </ul>
 <p><br></p>
 </div>
