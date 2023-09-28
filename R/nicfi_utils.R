@@ -144,9 +144,16 @@ nicfi_mosaics = function(planet_api_key,
   mosaics = content_response$mosaics
 
   valid_nicfi_image_types = unique(unlist(lapply(mosaics, function(x) unlist(x$item_types))))
+  if (any(is.na(valid_nicfi_image_types))) stop("It seems that the valid nicfi image types include NA's!", call. = F)
+  if (any(valid_nicfi_image_types == "")) stop("It seems that the valid nicfi image types include empty strings!", call. = F)
+  if (length(valid_nicfi_image_types) == 0) stop("It seems that for your Planet API key there are no valid Planet NICFI image types!", call. = F)
+  
   user_has_img_types = paste(sapply(valid_nicfi_image_types, function(x) glue::glue("'{x}'")), collapse = ', ')
-  if (!all(c("REOrthoTile", "PSScene4Band") %in% valid_nicfi_image_types)) stop(glue::glue("Valid 'NICFI' Image types are 'REOrthoTile' and 'PSScene4Band', whereas you have {user_has_img_types}! Please follow the suggested registration in https://www.planet.com/nicfi/"), call. = F)
-
+  if (verbose) cat(glue::glue("As of '2023-09-01' valid 'NICFI' Image types are 'PSScene' and 'REOrthoTile'! Your current Planet NICFI subscription returns {user_has_img_types}! If you encounter any errors, please follow the suggested registration in https://www.planet.com/nicfi/"), '\n')
+  
+  # It seems that since 2023-09-01 the following exception does not seem to be the case, especially the "PSScene4Band" does not seem to exist any more!
+  # if (!all(c("REOrthoTile", "PSScene4Band") %in% valid_nicfi_image_types)) stop(glue::glue("Valid 'NICFI' Image types are 'REOrthoTile' and 'PSScene4Band', whereas you have {user_has_img_types}! Please follow the suggested registration in https://www.planet.com/nicfi/"), call. = F)
+  
   mosaics = lapply(mosaics, function(x) {                                                 # extract the information of all mosaics (including the id's)
 
     nam_trunc = gsub('planet_medres_normalized_analytic_', '', x$name)
@@ -472,6 +479,8 @@ aria2c_download_paths = function(mosaic_output,
 #' @param verbose a boolean. If TRUE then information will be printed out in the console
 #' @param secondary_args_aria a character vector specifying the additional parameters that can be passed to the 'aria2c' function. For instance, "--retry-wait": specifies the seconds to wait between retries and "--max-tries=0" means unlimited re-tries. See the References section for more details.
 #' @return a character vector based on the verbosity of the function
+#' 
+#' @importFrom glue glue
 #'
 #' @references
 #'
@@ -604,6 +613,7 @@ aria2c_bulk_donwload = function(vector_or_file_path,
     if (verbose) cat("The temporary created ", vector_or_file_path, " file was removed!\n")
   }
 
+  if (verbose_dat != 0) message(glue::glue("You received an error code '{verbose_dat}'! Make sure you have 'aria2' installed!"))
   if (verbose) compute_elapsed_time(t_start)
 
   return(verbose_dat)
@@ -821,7 +831,7 @@ sequential_download_paths = function(aria2c_file_paths,
 #' #......................................................
 #'
 #' rst = terra::rast(VRT_out)
-#' sp::plot(rst, axes = F, legend = F)
+#' terra::plot(rst, axes = FALSE, legend = FALSE)
 #'
 #' }
 

@@ -32,7 +32,7 @@ The **Documentation** of the R package includes details on how to download and p
 
 <br>
 
-To spot deforestation areas we will perform change detection based on a **Sugarcane cultivation area in Bolivia**. This use case is [not new](https://eros.usgs.gov/image-gallery/earthshot/deforestation) and there is also a small [YouTube video](https://www.youtube.com/watch?v=d1sq5M0vWwM) that shows the change of the area over time (**from 2016 to 2018**). For this change detection task we will use two images:
+To spot deforestation areas we will perform change detection based on a **Sugarcane cultivation area in Bolivia**. This use case is [not new](https://eros.usgs.gov/media-gallery/earthshot/deforestation) and there is also a small [YouTube video](https://www.youtube.com/watch?v=d1sq5M0vWwM) that shows the change of the area over time (**from 2016 to 2018**). For this change detection task we will use two images:
 
 * the **first bi-annual** Image of **2016**
 * the **first bi-annual** Image of **2018**
@@ -96,7 +96,7 @@ dtbl_keep
 ![](./screenshots/nicfi_mosaics.png)
 <br>
 
-Then we will extract the **mosaic Quads** of the images for years **2016** and **2018**. The [Planet Web API](https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics) for the NICFI data includes both **Quads** ([pixel images of size 4096 x 4096](https://developers.planet.com/docs/data/sr-basemaps/)) and **tiles** ([pixel images of size 256 x 256](https://support.planet.com/hc/en-us/articles/360020018497-Planet-Tile-Streaming-FAQ)) for the global forest areas. 
+Then we will extract the **mosaic Quads** of the images for years **2016** and **2018**. The [Planet Web API](https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics) for the NICFI data includes both **Quads** ([pixel images of size 4096 x 4096](https://developers.planet.com/docs/data/sr-basemaps/)) and **tiles** (pixel images of size 256 x 256 - see Planet-Tile-Streaming) for the global forest areas. 
 
 The **PlanetNICFI** R package makes use of **Quads** because it allows the user to extract a specified Area of Interest (AOI) based on a **bounding box**, as I'll explain later in this vignette. 
 
@@ -346,14 +346,17 @@ The next image shows the **cropped area for the year 2018**,
 
 <br>
 
-Now that we have the cropped images for both years we can perform change detection. One method that can be used directly to the cropped images is **Change Vector Analysis**. I'll use the [Rstoolbox](https://CRAN.R-project.org/package=RStoolbox) package which includes the **rasterCVA** function. Based on the documentation "... Change Vector Analysis (CVA) is used to identify spectral changes between two identical scenes which were acquired at different times ...". The following code snippet loads the .tif files and computes CVA using the output image of the year 2018 as a **reference**,
+Now that we have the cropped images for both years we can perform change detection. One method that can be used directly to the cropped images is **Change Vector Analysis**. I'll use the [Rstoolbox](https://github.com/bleutner/RStoolbox) package which includes the **rasterCVA** function. Based on the documentation "... Change Vector Analysis (CVA) is used to identify spectral changes between two identical scenes which were acquired at different times ...". The following code snippet loads the .tif files and computes CVA using the output image of the year 2018 as a **reference**,
 
 <br>
 
 ```{r}
 
-orig_rst = raster::brick(x = pth_crop_2018)        # image 2018: origin or reference
-change_rst = raster::brick(x = pth_crop_out)       # image 2016
+# The 'RStoolbox' R Package is required, please install from Github
+# 'https://github.com/bleutner/RStoolbox' using remotes::install_github('bleutner/RStoolbox')
+
+orig_rst = terra::rast(x = pth_crop_2018)        # image 2018: origin or reference
+change_rst = terra::rast(x = pth_crop_out)       # image 2016
 
 bands = c(1, 5)                                    # bands 1 and 5 depict the difference better
 
@@ -375,7 +378,7 @@ AOI (2016)             |  AOI (2018)
 
 ```{r}
 
-sp::plot(cva$angle, axes = F)
+terra::plot(cva$angle, axes = F)
 
 ```
 

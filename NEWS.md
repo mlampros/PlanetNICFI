@@ -1,4 +1,13 @@
 
+## PlanetNICFI 1.0.5
+
+* I updated the README.md file by including the weblink for the "NICFI Satellite Data Program user community code repositories"
+* I moved the 'RStoolbox' package from Suggests in the DESCRIPTION file because it was archived on CRAN
+* I removed the 'raster' and 'sp' R packages from the Suggests in the DESCRIPTION file
+* I commented out an error case in the 'nicfi_mosaics()' R function because it seems that since 2023-09-01 the previously supported .tif type "PSScene4Band" no longer exists
+* I added a message to the 'aria2c_bulk_donwload()' function in case that the 'system2()' function internally does not return the value '0' (a value of '0' corresponds to a successful download)
+
+
 ## PlanetNICFI 1.0.4
 
 * I've added the "figures" folder in the "man" directory

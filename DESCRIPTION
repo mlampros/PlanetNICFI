@@ -2,7 +2,7 @@ Package: PlanetNICFI
 Type: Package
 Title: Processing of the 'Planet NICFI' Satellite Imagery
 Version: 1.0.5
-Date: 2022-07-28
+Date: 2023-09-28
 Authors@R: c( person(given = "Lampros", family = "Mouselimis", email = "mouselimislampros@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "https://orcid.org/0000-0002-8024-1546")),  person("Planet Labs", "Inc", role = "cph") )
 URL: https://github.com/mlampros/PlanetNICFI
 Description: It includes functions to download and process the 'Planet NICFI' (Norway's International Climate and Forest Initiative) Satellite Imagery utilizing the Planet Mosaics API <https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics>. 'GDAL' (library for raster and vector geospatial data formats) and 'aria2c' (paralleled download utility) must be installed and configured in the user's Operating System.
@@ -21,10 +21,7 @@ Imports:
 Suggests: 
     rmarkdown,
     knitr,
-    sp,
-    raster,
-    RStoolbox,
     testthat (>= 3.0.0)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 VignetteBuilder: knitr
