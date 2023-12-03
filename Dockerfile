@@ -16,3 +16,4 @@ RUN R -e "remotes::install_github('mlampros/PlanetNICFI', upgrade = 'always', de
  apt-get clean
 
 ENV USER rstudio
+
