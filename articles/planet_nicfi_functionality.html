@@ -114,7 +114,7 @@ since <strong>September 2020</strong>.</p>
 <p><br></p>
 <p>To spot deforestation areas we will perform change detection based on
 a <strong>Sugarcane cultivation area in Bolivia</strong>. This use case
-is <a href="https://eros.usgs.gov/image-gallery/earthshot/deforestation" class="external-link">not
+is <a href="https://eros.usgs.gov/media-gallery/earthshot/deforestation" class="external-link">not
 new</a> and there is also a small <a href="https://www.youtube.com/watch?v=d1sq5M0vWwM" class="external-link">YouTube video</a>
 that shows the change of the area over time (<strong>from 2016 to
 2018</strong>). For this change detection task we will use two
@@ -167,8 +167,9 @@ columns) as the previous and the next output shows,</p>
 <p>Then we will extract the <strong>mosaic Quads</strong> of the images
 for years <strong>2016</strong> and <strong>2018</strong>. The <a href="https://developers.planet.com/docs/basemaps/reference/#tag/Basemaps-and-Mosaics" class="external-link">Planet
 Web API</a> for the NICFI data includes both <strong>Quads</strong> (<a href="https://developers.planet.com/docs/data/sr-basemaps/" class="external-link">pixel images
-of size 4096 x 4096</a>) and <strong>tiles</strong> (<a href="https://support.planet.com/hc/en-us/articles/360020018497-Planet-Tile-Streaming-FAQ" class="external-link">pixel
-images of size 256 x 256</a>) for the global forest areas.</p>
+of size 4096 x 4096</a>) and <strong>tiles</strong> (pixel images of
+size 256 x 256 - see Planet-Tile-Streaming) for the global forest
+areas.</p>
 <p>The <strong>PlanetNICFI</strong> R package makes use of
 <strong>Quads</strong> because it allows the user to extract a specified
 Area of Interest (AOI) based on a <strong>bounding box</strong>, as I’ll
@@ -420,21 +421,24 @@ in the same way by adjusting the code in the following way,</p>
 <p><br></p>
 <p>Now that we have the cropped images for both years we can perform
 change detection. One method that can be used directly to the cropped
-images is <strong>Change Vector Analysis</strong>. I’ll use the <a href="https://CRAN.R-project.org/package=RStoolbox" class="external-link">Rstoolbox</a>
-package which includes the <strong>rasterCVA</strong> function. Based on
-the documentation “… Change Vector Analysis (CVA) is used to identify
+images is <strong>Change Vector Analysis</strong>. I’ll use the <a href="https://github.com/bleutner/RStoolbox" class="external-link">Rstoolbox</a> package which
+includes the <strong>rasterCVA</strong> function. Based on the
+documentation “… Change Vector Analysis (CVA) is used to identify
 spectral changes between two identical scenes which were acquired at
 different times …”. The following code snippet loads the .tif files and
 computes CVA using the output image of the year 2018 as a
 <strong>reference</strong>,</p>
 <p><br></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">orig_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_2018</span><span class="op">)</span>        <span class="co"># image 2018: origin or reference</span></span>
-<span><span class="va">change_rst</span> <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_out</span><span class="op">)</span>       <span class="co"># image 2016</span></span>
+<code class="sourceCode R"><span><span class="co"># The 'RStoolbox' R Package is required, please install from Github</span></span>
+<span><span class="co"># 'https://github.com/bleutner/RStoolbox' using remotes::install_github('bleutner/RStoolbox')</span></span>
+<span></span>
+<span><span class="va">orig_rst</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_2018</span><span class="op">)</span>        <span class="co"># image 2018: origin or reference</span></span>
+<span><span class="va">change_rst</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pth_crop_out</span><span class="op">)</span>       <span class="co"># image 2016</span></span>
 <span></span>
 <span><span class="va">bands</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>                                    <span class="co"># bands 1 and 5 depict the difference better</span></span>
 <span></span>
-<span><span class="va">cva</span> <span class="op">=</span> <span class="fu">RStoolbox</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RStoolbox/man/rasterCVA.html" class="external-link">rasterCVA</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">orig_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">change_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">cva</span> <span class="op">=</span> <span class="fu">RStoolbox</span><span class="fu">::</span><span class="fu">rasterCVA</span><span class="op">(</span>x <span class="op">=</span> <span class="va">orig_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">change_rst</span><span class="op">[[</span><span class="va">bands</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>To observe the differences in more detail we can arrange the plots
 side-by-side and add the CVA plot too,</p>
@@ -455,7 +459,7 @@ side-by-side and add the CVA plot too,</p>
 </table>
 <p><br></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sp</span><span class="fu">::</span><span class="fu">plot</span><span class="op">(</span><span class="va">cva</span><span class="op">$</span><span class="va">angle</span>, axes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cva</span><span class="op">$</span><span class="va">angle</span>, axes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="center">Change Vector Analysis</th>

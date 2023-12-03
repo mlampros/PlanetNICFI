@@ -58,6 +58,14 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.5" id="planetnicfi-105">PlanetNICFI 1.0.5<small>2023-09-28</small><a class="anchor" aria-label="anchor" href="#planetnicfi-105"></a></h2>
+<ul><li>I updated the README.md file by including the weblink for the “NICFI Satellite Data Program user community code repositories”</li>
+<li>I moved the ‘RStoolbox’ package from Suggests in the DESCRIPTION file because it was archived on CRAN</li>
+<li>I removed the ‘raster’ and ‘sp’ R packages from the Suggests in the DESCRIPTION file</li>
+<li>I commented out an error case in the ‘nicfi_mosaics()’ R function because it seems that since 2023-09-01 the previously supported .tif type “PSScene4Band” no longer exists</li>
+<li>I added a message to the ‘aria2c_bulk_donwload()’ function in case that the ‘system2()’ function internally does not return the value ‘0’ (a value of ‘0’ corresponds to a successful download)</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4" id="planetnicfi-104">PlanetNICFI 1.0.4<small>2022-02-06</small><a class="anchor" aria-label="anchor" href="#planetnicfi-104"></a></h2>
 <ul><li>I’ve added the “figures” folder in the “man” directory</li>
 <li>I updated the <em>README.md</em> file</li>
